@@ -18,3 +18,7 @@
 *.jpg binary
 *.ico binary
 *.woff2 binary
+
+# TikTok's URL-ownership signature. Marked binary so no line-ending or
+# trailing-newline normalisation can alter a byte of what the portal issued.
+tiktok*.txt binary

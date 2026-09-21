@@ -61,8 +61,11 @@ const CRITICAL = [
     // shipping, the app's URL properties silently fall out of verification and
     // the next review submission is rejected for a reason nobody will connect
     // back to a deleted file.
-    path: "tiktok-developers-site-verification.txt",
-    url: "/tiktok-developers-site-verification.txt",
+    // Name is "tiktok" + the signature + ".txt", exactly as the portal hands
+    // it over -- NOT a generic filename. Guessed wrong once; the downloaded
+    // file is the only ground truth.
+    path: "tiktokVK4dgDqUcQq8KduB4Fuu8VjOoSSnG71L.txt",
+    url: "/tiktokVK4dgDqUcQq8KduB4Fuu8VjOoSSnG71L.txt",
     why: "TikTok URL prefix ownership proof",
     contains: ["tiktok-developers-site-verification="],
     // Not a page: it is one line of text and has no prose to measure.
