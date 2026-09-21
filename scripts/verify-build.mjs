@@ -56,6 +56,18 @@ const CRITICAL = [
     // only assert the page and its script are present and inline.
     contains: ["Autorización de TikTok", "URLSearchParams"],
   },
+  {
+    // TikTok fetches this to prove we own the URL prefix. If it ever stops
+    // shipping, the app's URL properties silently fall out of verification and
+    // the next review submission is rejected for a reason nobody will connect
+    // back to a deleted file.
+    path: "tiktok-developers-site-verification.txt",
+    url: "/tiktok-developers-site-verification.txt",
+    why: "TikTok URL prefix ownership proof",
+    contains: ["tiktok-developers-site-verification="],
+    // Not a page: it is one line of text and has no prose to measure.
+    skipNoJsCheck: true,
+  },
 ];
 
 /** Pages that should exist but carry no external commitment. */
@@ -94,6 +106,11 @@ for (const page of CRITICAL) {
     .replace(/<[^>]+>/g, " ")
     .replace(/\s+/g, " ")
     .trim();
+  if (page.skipNoJsCheck) {
+    notes.push(`${page.url} — present (${html.trim().length} bytes)`);
+    continue;
+  }
+
   const floor = page.path === "tiktok/callback/index.html" ? 200 : 1500;
   if (text.length < floor) {
     problems.push(
