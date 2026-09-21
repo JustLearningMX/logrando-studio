@@ -1,0 +1,7 @@
+Logrando Studio is a private, single-operator tool that publishes my own educational videos to my own TikTok account. It is not offered to third parties.
+
+Login Kit - user.info.basic: after I authorize an account, the app calls /v2/user/info/ for open_id and display_name only. Single use: a safety check comparing the authorized account against the channel the video was produced for, aborting the upload if they differ. Nothing is stored or shown to anyone.
+
+Content Posting API - video.upload: the app sends a finished, reviewed MP4 to my account's inbox via /v2/post/publish/inbox/video/init/ (FILE_UPLOAD), PUTs the bytes to the returned upload_url, then polls /v2/post/publish/status/fetch/ until SEND_TO_USER_INBOX. I then open the notification in the TikTok app, write the caption and publish it myself.
+
+We deliberately do not request video.publish: every post is completed by a human in TikTok. No other scope is requested; the app cannot read or edit videos, followers or comments.

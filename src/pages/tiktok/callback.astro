@@ -1,4 +1,20 @@
 ---
+/**
+ * Return point of the TikTok authorization.
+ *
+ * Handles both ways the flow can start, because both are real:
+ *
+ *  - From the site (/app/): the browser generated the `state` and stored it in
+ *    sessionStorage. This page compares it and REFUSES a mismatch, then shows
+ *    just the authorization code to paste into `tiktok_auth.py --code`.
+ *  - From the terminal: `tiktok_auth.py` generated the state itself and will
+ *    verify it. There is nothing in sessionStorage, so this page shows the full
+ *    URL for pasting and lets the script do the checking.
+ *
+ * Either way the code never leaves the browser: this is a static page with no
+ * backend to send it to. It is exchanged for a token on the operator's machine,
+ * which is the only place the client secret exists.
+ */
 import { url } from "../../lib/url.ts";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 ---
@@ -15,164 +31,242 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     </section>
 
     <div class="prose">
-
-      <!-- Estado: éxito -->
-      <div id="ok" hidden>
+      <!-- Éxito, flujo iniciado desde el sitio -->
+      <div id="ok-web" hidden>
         <div class="notice">
           <p>
-            <strong>Listo.</strong> Copia la dirección completa de abajo y pégala
-            en la terminal, donde <code>tiktok_auth.py</code> la está esperando.
+            <strong>Cuenta autorizada.</strong> Copia el código y pégalo en la
+            terminal para terminar de conectar el canal
+            <strong><span id="channelName">—</span></strong>.
           </p>
         </div>
 
-        <p><strong>Dirección para pegar</strong></p>
-        <pre class="codeblock" id="fullUrl"></pre>
+        <p><strong>Código de autorización</strong></p>
+        <pre class="codeblock" id="codeValue"></pre>
         <p>
-          <button class="btn" type="button" id="copyBtn">Copiar dirección</button>
-          <span class="muted" id="copyMsg" role="status" aria-live="polite"></span>
+          <button class="btn" type="button" data-copy="codeValue">Copiar código</button>
+          <span class="muted" role="status" aria-live="polite"></span>
+        </p>
+
+        <p><strong>Comando</strong></p>
+        <pre class="codeblock" id="cmdValue"></pre>
+        <p>
+          <button class="btn secondary" type="button" data-copy="cmdValue">Copiar comando</button>
+          <span class="muted" role="status" aria-live="polite"></span>
         </p>
 
         <div class="notice warn">
           <p>
-            <strong>No compartas esta dirección con nadie.</strong> Contiene un
-            código de autorización de un solo uso para tu cuenta. Caduca en unos
-            minutos; si expira, vuelve a correr el script y repite el proceso.
+            <strong>No compartas este código.</strong> Es de un solo uso y caduca
+            en minutos. Si expira, vuelve a
+            <a id="retryLink" href="#">conectar la cuenta</a>.
           </p>
-        </div>
-
-        <h2>Detalle</h2>
-        <div class="table-scroll">
-          <table>
-            <tbody>
-              <tr><th scope="row" style="width:9rem">Cuenta</th><td id="scopesRow">—</td></tr>
-              <tr><th scope="row">Verificación</th><td id="stateRow">—</td></tr>
-            </tbody>
-          </table>
         </div>
       </div>
 
-      <!-- Estado: error devuelto por TikTok -->
+      <!-- Éxito, flujo iniciado desde la terminal -->
+      <div id="ok-cli" hidden>
+        <div class="notice">
+          <p>
+            <strong>Listo.</strong> Copia la dirección completa y pégala en la
+            terminal, donde <code>tiktok_auth.py</code> la está esperando.
+          </p>
+        </div>
+        <p><strong>Dirección para pegar</strong></p>
+        <pre class="codeblock" id="fullUrl"></pre>
+        <p>
+          <button class="btn" type="button" data-copy="fullUrl">Copiar dirección</button>
+          <span class="muted" role="status" aria-live="polite"></span>
+        </p>
+        <div class="notice warn">
+          <p>
+            <strong>No compartas esta dirección.</strong> Contiene un código de un
+            solo uso que caduca en minutos.
+          </p>
+        </div>
+      </div>
+
+      <!-- state que no coincide -->
+      <div id="bad-state" hidden>
+        <div class="notice warn">
+          <p>
+            <strong>La verificación de seguridad falló.</strong> El parámetro
+            <code>state</code> que regresó TikTok no coincide con el que generó
+            esta sesión, así que el código se descartó sin mostrarse.
+          </p>
+          <p class="muted">
+            Suele pasar por abrir el enlace en otro navegador o después de cerrar
+            la pestaña. Si no fuiste tú quien inició esto, ignóralo.
+          </p>
+        </div>
+        <p><a class="btn" id="retryLink2" href="#">Volver a intentar</a></p>
+      </div>
+
+      <!-- error devuelto por TikTok -->
       <div id="err" hidden>
         <div class="notice warn">
           <p><strong>TikTok no concedió la autorización.</strong></p>
           <p id="errDetail" class="muted"></p>
         </div>
         <p>
-          Vuelve a correr <code>scripts/tiktok_auth.py</code> y abre la dirección
-          nueva que imprima. Si el error se repite, revisa en el portal de
-          desarrolladores que la app tenga activado el producto Content Posting
-          API con los permisos <code>video.upload</code> y
-          <code>user.info.basic</code>, y que el redirect URI registrado sea
-          exactamente esta dirección.
+          Revisa en el portal que la app tenga el producto Content Posting API con
+          los permisos <code>video.upload</code> y <code>user.info.basic</code>, y
+          que tu cuenta esté agregada al sandbox como <em>target user</em>.
         </p>
+        <p><a class="btn" id="retryLink3" href="#">Volver a intentar</a></p>
       </div>
 
-      <!-- Estado: entrada directa, sin parámetros -->
+      <!-- entrada directa -->
       <div id="idle" hidden>
         <div class="notice">
           <p>
-            Esta página es el punto de retorno de la autorización de TikTok para
-            Logrando Studio. No tiene nada que hacer si llegaste aquí
-            directamente.
+            Esta página es el punto de retorno de la autorización de TikTok. No
+            tiene nada que hacer si llegaste aquí directamente.
           </p>
         </div>
-        <p>
-          Se usa así: <code>scripts/tiktok_auth.py</code> imprime una dirección,
-          la abres, apruebas los permisos con la cuenta del canal, y TikTok te
-          regresa aquí con el código que el script necesita.
-        </p>
-        <p><a class="btn secondary" href={url("/")}>Ir al inicio</a></p>
+        <p><a class="btn" id="startLink" href="#">Conectar una cuenta de TikTok</a></p>
       </div>
 
       <h2>Qué hace esta página</h2>
       <p>
-        Nada más que leer lo que viene en la dirección y mostrarlo. Es un sitio
+        Nada más que leer lo que viene en la dirección, comprobar que la respuesta
+        corresponde a la solicitud que salió de aquí, y mostrarlo. Es un sitio
         estático: <strong>el código no se envía a ningún servidor, no se guarda y
         no sale de tu navegador.</strong> Los detalles están en la
         <a href={url("/privacy/")}>política de privacidad</a>.
       </p>
-
     </div>
   </div>
 </BaseLayout>
 
 {/*
-  is:inline keeps this script exactly as written instead of letting Astro bundle
-  it into a module. This page is the OAuth return point: it has to run from a
-  plain file load, with no import graph and nothing to fetch first. The code
-  only reads window.location and writes to the DOM -- nothing leaves the browser.
+  is:inline keeps this exactly as written instead of bundling it into a module.
+  This is the OAuth return point: it has to run from a plain file load, with no
+  import graph and nothing to fetch first.
 */}
-<script is:inline>
-(function () {
-  var params = new URLSearchParams(window.location.search);
-  var code = params.get("code");
-  var error = params.get("error");
-  var state = params.get("state");
-  var scopes = params.get("scopes");
+<script is:inline define:vars={{ appUrl: url("/app/") }}>
+  (function () {
+    var STATE_KEY = "tiktok_oauth_state";
+    var params = new URLSearchParams(window.location.search);
+    var code = params.get("code");
+    var error = params.get("error");
+    var state = params.get("state");
 
-  var title = document.getElementById("title");
-  var subtitle = document.getElementById("subtitle");
+    var title = document.getElementById("title");
+    var subtitle = document.getElementById("subtitle");
 
-  function show(id) {
-    document.getElementById(id).hidden = false;
-  }
+    ["retryLink", "retryLink2", "retryLink3", "startLink"].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) el.setAttribute("href", appUrl);
+    });
 
-  if (error) {
-    title.textContent = "No se concedió la autorización";
-    subtitle.textContent = "TikTok devolvió un error en lugar de un código.";
-    var desc = params.get("error_description") || "";
-    document.getElementById("errDetail").textContent = error + (desc ? " — " + desc : "");
-    show("err");
-    return;
-  }
-
-  if (!code) {
-    title.textContent = "Autorización de TikTok";
-    subtitle.textContent = "Esta página espera el retorno de TikTok.";
-    show("idle");
-    return;
-  }
-
-  title.textContent = "Autorización concedida";
-  subtitle.textContent = "Copia la dirección y pégala en la terminal.";
-  document.getElementById("fullUrl").textContent = window.location.href;
-  document.getElementById("scopesRow").textContent = scopes ? scopes.replace(/,/g, ", ") : "—";
-  document.getElementById("stateRow").textContent = state
-    ? "state recibido (el script lo compara antes de continuar)"
-    : "sin state — el script rechazará esta dirección";
-  show("ok");
-
-  var btn = document.getElementById("copyBtn");
-  var msg = document.getElementById("copyMsg");
-  btn.addEventListener("click", function () {
-    var text = window.location.href;
-    function done() {
-      msg.textContent = "  Copiado.";
-      setTimeout(function () { msg.textContent = ""; }, 2500);
+    function show(id) {
+      document.getElementById(id).hidden = false;
     }
-    // clipboard.writeText needs a secure context and can still be blocked;
-    // the textarea fallback keeps the page usable either way.
-    if (navigator.clipboard && window.isSecureContext) {
-      navigator.clipboard.writeText(text).then(done, fallback);
-    } else {
-      fallback();
-    }
-    function fallback() {
-      var ta = document.createElement("textarea");
-      ta.value = text;
-      ta.setAttribute("readonly", "");
-      ta.style.position = "fixed";
-      ta.style.opacity = "0";
-      document.body.appendChild(ta);
-      ta.select();
+
+    function read(key) {
       try {
-        document.execCommand("copy");
-        done();
+        return sessionStorage.getItem(key);
       } catch (e) {
-        msg.textContent = "  Cópiala manualmente del recuadro.";
+        return null;
       }
-      document.body.removeChild(ta);
     }
-  });
-})();
+
+    function clear() {
+      try {
+        sessionStorage.removeItem(STATE_KEY);
+        sessionStorage.removeItem(STATE_KEY + "_channel");
+      } catch (e) {
+        /* nothing to clean up */
+      }
+    }
+
+    function wireCopyButtons() {
+      document.querySelectorAll("[data-copy]").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var text = document.getElementById(btn.getAttribute("data-copy")).textContent;
+          var msg = btn.parentNode.querySelector(".muted");
+          function done() {
+            if (msg) {
+              msg.textContent = "  Copiado.";
+              setTimeout(function () {
+                msg.textContent = "";
+              }, 2500);
+            }
+          }
+          function fallback() {
+            var ta = document.createElement("textarea");
+            ta.value = text;
+            ta.setAttribute("readonly", "");
+            ta.style.position = "fixed";
+            ta.style.opacity = "0";
+            document.body.appendChild(ta);
+            ta.select();
+            try {
+              document.execCommand("copy");
+              done();
+            } catch (e) {
+              if (msg) msg.textContent = "  Cópialo manualmente del recuadro.";
+            }
+            document.body.removeChild(ta);
+          }
+          if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(text).then(done, fallback);
+          } else {
+            fallback();
+          }
+        });
+      });
+    }
+
+    if (error) {
+      title.textContent = "No se concedió la autorización";
+      subtitle.textContent = "TikTok devolvió un error en lugar de un código.";
+      var desc = params.get("error_description") || "";
+      document.getElementById("errDetail").textContent = error + (desc ? " — " + desc : "");
+      clear();
+      show("err");
+      return;
+    }
+
+    if (!code) {
+      title.textContent = "Autorización de TikTok";
+      subtitle.textContent = "Esta página espera el retorno de TikTok.";
+      show("idle");
+      return;
+    }
+
+    var expected = read(STATE_KEY);
+
+    if (expected !== null) {
+      // Started from this site: the state is ours to check.
+      if (state !== expected) {
+        title.textContent = "Verificación fallida";
+        subtitle.textContent = "La respuesta no corresponde a esta sesión.";
+        clear();
+        show("bad-state");
+        return;
+      }
+      var channel = read(STATE_KEY + "_channel") || "deviatips";
+      clear();
+      title.textContent = "Cuenta autorizada";
+      subtitle.textContent = "Copia el código y termina en la terminal.";
+      document.getElementById("channelName").textContent = channel;
+      document.getElementById("codeValue").textContent = decodeURIComponent(code);
+      document.getElementById("cmdValue").textContent =
+        ".venv/Scripts/python.exe scripts/tiktok_auth.py --channel " +
+        channel +
+        " --code " +
+        decodeURIComponent(code);
+      show("ok-web");
+    } else {
+      // Started from the terminal: that script owns the state check.
+      title.textContent = "Autorización concedida";
+      subtitle.textContent = "Copia la dirección y pégala en la terminal.";
+      document.getElementById("fullUrl").textContent = window.location.href;
+      show("ok-cli");
+    }
+
+    wireCopyButtons();
+  })();
 </script>
