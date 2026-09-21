@@ -15,7 +15,7 @@
  */
 
 import { useState } from "react";
-import { STATE_KEY, TIKTOK } from "../../config/tiktok";
+import { clientKeyFor, isPlaceholder, resolveEnv, STATE_KEY, TIKTOK } from "../../config/tiktok";
 
 function newState(): string {
   const bytes = new Uint8Array(16);
@@ -27,7 +27,22 @@ export default function TikTokConnect() {
   const [channel, setChannel] = useState<string>(TIKTOK.channels[0].slug);
   const [error, setError] = useState<string | null>(null);
 
+  // Read once on mount: the island only renders in the browser, and reading
+  // location during render would differ between a prerender and hydration.
+  const env = resolveEnv(typeof window === "undefined" ? "" : window.location.search);
+  const clientKey = clientKeyFor(env);
+  const keyMissing = isPlaceholder(clientKey);
+
   function connect() {
+    // Better to stop here than to bounce the user to TikTok's consent screen
+    // only for it to fail with a bare "client_key" and no explanation.
+    if (keyMissing) {
+      setError(
+        `Falta la client key del entorno "${env}" en src/config/tiktok.ts. Sandbox y producción son apps distintas con llaves distintas.`
+      );
+      return;
+    }
+
     let state: string;
     try {
       state = newState();
@@ -45,7 +60,7 @@ export default function TikTokConnect() {
     }
 
     const params = new URLSearchParams({
-      client_key: TIKTOK.clientKey,
+      client_key: clientKey,
       response_type: "code",
       scope: TIKTOK.scopes.join(","),
       redirect_uri: TIKTOK.redirectUri,
@@ -89,9 +104,13 @@ export default function TikTokConnect() {
         </select>
 
         <p style={{ marginTop: 20, marginBottom: 0 }}>
-          <button className="btn" type="button" onClick={connect}>
+          <button className="btn" type="button" onClick={connect} disabled={keyMissing}>
             Conectar cuenta de TikTok
           </button>
+          {" "}
+          <span className="muted" style={{ fontSize: "0.85rem" }}>
+            entorno: {env}
+          </span>
         </p>
       </div>
 

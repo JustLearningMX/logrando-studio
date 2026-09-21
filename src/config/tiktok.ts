@@ -9,15 +9,57 @@
  * this repo, or in anything this site serves. It lives only on the operator's
  * machine (~/.openmontage/tiktok/client_secret.json) and is used solely by the
  * local script that exchanges the code for a token.
+ *
+ * ---------------------------------------------------------------------------
+ * SANDBOX AND PRODUCTION HAVE DIFFERENT KEYS.
+ *
+ * TikTok issues a separate client_key/client_secret pair per environment.
+ * Using the production key while the app is still unapproved gets you
+ * "No se pudo iniciar sesión con TikTok ... client_key" at the consent screen,
+ * with nothing else to go on.
+ *
+ * Whichever environment is active here, the operator's local
+ * client_secret.json must use the MATCHING pair. That file holds both
+ * environments and names the active one, mirroring this; a production key with
+ * a sandbox secret fails later and less clearly, at the token exchange.
+ * ---------------------------------------------------------------------------
  */
 
+export type TikTokEnv = "sandbox" | "production";
+
+/** Default environment. Flip once TikTok approves the app. */
+const DEFAULT_ENV: TikTokEnv = "sandbox";
+
+const CLIENT_KEYS: Record<TikTokEnv, string> = {
+  sandbox: "sbaw63kh49zvhpnjqu",
+  production: "aw4azfkuht5b3vr3",
+};
+
+/**
+ * `?env=production` overrides the default without a rebuild, the same way
+ * --env does on the local script. Anything unrecognised falls back to the
+ * default rather than sending a bogus client_key to TikTok.
+ */
+export function resolveEnv(search?: string): TikTokEnv {
+  const raw = new URLSearchParams(search ?? "").get("env");
+  return raw === "sandbox" || raw === "production" ? raw : DEFAULT_ENV;
+}
+
+export function clientKeyFor(env: TikTokEnv): string {
+  return CLIENT_KEYS[env];
+}
+
+export function isPlaceholder(key: string): boolean {
+  return key.startsWith("PENDIENTE_");
+}
+
 export const TIKTOK = {
-  clientKey: "aw4azfkuht5b3vr3",
+  defaultEnv: DEFAULT_ENV,
 
   /**
    * Must match the Login Kit redirect URI registered in the portal byte for
-   * byte, trailing slash included. A mismatch fails the token exchange with an
-   * error that does not say why.
+   * byte, trailing slash included — and it has to be registered in the SANDBOX
+   * app's own Login Kit settings too, not only in the production one.
    */
   redirectUri: "https://justlearningmx.github.io/logrando-studio/tiktok/callback/",
 
