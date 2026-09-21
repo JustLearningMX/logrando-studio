@@ -1,0 +1,78 @@
+---
+import { url } from "../lib/url.ts";
+/**
+ * The one wrapper every page uses. Header, footer and <head> live here so a
+ * nav change is one edit instead of six, which is the whole reason the site
+ * moved off hand-copied HTML.
+ *
+ * Pages render to static HTML by default: no island is hydrated unless a page
+ * asks for one with a client:* directive. That is what keeps /privacy/ and
+ * /terms/ readable with JavaScript disabled — they are URLs registered in the
+ * TikTok and Google portals, and a reviewer opening one must never get a blank
+ * page waiting on a bundle.
+ */
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+  /** Keep utility pages like the OAuth callback out of search results. */
+  noindex?: boolean;
+}
+
+const { title, description, noindex = false } = Astro.props;
+const year = new Date().getFullYear();
+const nav = [
+  { href: url("/#canales"), label: "Canales" },
+  { href: url("/#como-funciona"), label: "Cómo funciona" },
+  { href: url("/privacy/"), label: "Privacidad" },
+  { href: url("/terms/"), label: "Términos" },
+];
+---
+
+<!DOCTYPE html>
+<html lang="es-MX">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <header class="site-header">
+      <div class="wrap">
+        <a class="wordmark" href={url("/")}><span class="mark">[▸]</span> Logrando Studio</a>
+        <nav class="site-nav" aria-label="Principal">
+          {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <div>© {year} Logrando Studio · Hiram Chávez · México</div>
+        <div class="footer-links">
+          <a href={url("/privacy/")}>Privacidad</a>
+          <a href={url("/terms/")}>Términos</a>
+          <a href="mailto:virtual.liga@gmail.com">Contacto</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

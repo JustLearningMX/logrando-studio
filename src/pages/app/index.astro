@@ -1,0 +1,33 @@
+---
+/**
+ * The dashboard route. This is the ONLY page that ships JavaScript: the island
+ * below hydrates, everything else on the site stays static HTML.
+ *
+ * `client:only="react"` rather than client:load because the panel will render
+ * per-viewer authenticated data — there is no meaningful server-rendered
+ * version of it, and prerendering one would only produce a flash of empty
+ * table before the real data arrives.
+ */
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import DashboardShell from "../../components/app/DashboardShell.tsx";
+---
+
+<BaseLayout
+  title="Panel — Logrando Studio"
+  description="Panel interno de publicaciones de Logrando Studio."
+  noindex={true}
+>
+  <div class="wrap">
+    <section class="hero" style="padding-bottom:16px">
+      <h1>Panel de publicaciones</h1>
+      <p class="lede">
+        Estado de cada video en cada plataforma, sin abrir Studio ni leer
+        archivos JSON.
+      </p>
+    </section>
+
+    <div class="prose">
+      <DashboardShell client:only="react" />
+    </div>
+  </div>
+</BaseLayout>

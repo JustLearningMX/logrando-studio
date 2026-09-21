@@ -1,0 +1,157 @@
+---
+import { url } from "../lib/url.ts";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Logrando Studio"
+  description="Logrando Studio produce y publica canales de contenido educativo en español, con un sistema de producción de video asistido por IA."
+>
+  <section class="hero">
+    <div class="wrap">
+      <h1>Contenido educativo en español,<br>producido de punta a punta.</h1>
+      <p class="lede">
+        Logrando Studio es el estudio de contenido de Hiram Chávez. Producimos y
+        publicamos canales cortos y largos en español, apoyados en un sistema de
+        producción de video asistido por IA que se encarga del guion, la
+        narración, el render y la publicación.
+      </p>
+      <p style="margin-top:28px">
+        <a class="btn" href="#canales">Ver los canales</a>
+        <a class="btn secondary" href="#como-funciona">Cómo funciona</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="canales">
+    <div class="wrap">
+      <h2>Canales</h2>
+      <p class="lede">
+        Cada canal tiene su propio tema, formato y público. Comparten el mismo
+        motor de producción y las mismas reglas de publicación.
+      </p>
+
+      <div class="grid" style="margin-top:28px">
+
+        <a class="card card-link" href={url("/channels/deviatips/")}>
+          <span class="tag">Activo</span>
+          <h3>deviatips</h3>
+          <p class="muted">
+            Tips de programación en 60 segundos. Un bug o una trampa del lenguaje
+            por video, explicada con código real que sí se ejecutó.
+          </p>
+          <p style="margin-bottom:0"><span class="muted">YouTube · TikTok</span></p>
+        </a>
+
+        <div class="card">
+          <span class="tag soon">En preparación</span>
+          <h3>Leyendas y terror</h3>
+          <p class="muted">
+            Narraciones largas de leyendas mexicanas, originales pero ancladas en
+            el folclor real.
+          </p>
+          <p style="margin-bottom:0"><span class="muted">Próximamente</span></p>
+        </div>
+
+        <div class="card">
+          <span class="tag soon">En preparación</span>
+          <h3>Contenido infantil</h3>
+          <p class="muted">
+            Videos largos para público infantil, con una gramática visual
+            completamente distinta a la de los canales técnicos.
+          </p>
+          <p style="margin-bottom:0"><span class="muted">Próximamente</span></p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="como-funciona">
+    <div class="wrap">
+      <h2>Cómo funciona</h2>
+      <p class="lede">
+        El estudio opera sobre un sistema propio de producción de video. Cada
+        video recorre la misma línea, y nada se publica sin que una persona lo
+        revise y lo apruebe.
+      </p>
+
+      <div class="grid" style="margin-top:28px">
+        <div class="card">
+          <h3>1. Producción</h3>
+          <p class="muted">
+            Guion, verificación del código que aparece en pantalla, narración,
+            subtítulos, miniatura y render. Todo se archiva antes de publicar.
+          </p>
+        </div>
+        <div class="card">
+          <h3>2. Revisión</h3>
+          <p class="muted">
+            Revisiones independientes de exactitud técnica y de coherencia entre
+            lo que se dice y lo que se ve. Un video que no pasa, se corrige y
+            vuelve a entrar.
+          </p>
+        </div>
+        <div class="card">
+          <h3>3. Publicación</h3>
+          <p class="muted">
+            El video aprobado se sube a los canales propios del estudio mediante
+            las APIs oficiales de cada plataforma. La visibilidad final siempre
+            la decide una persona.
+          </p>
+        </div>
+      </div>
+
+      <h2 id="plataformas">Plataformas e integraciones</h2>
+      <p>
+        Logrando Studio usa las APIs oficiales de las plataformas donde publica,
+        y únicamente para subir contenido propio a cuentas propias. Qué pedimos y
+        para qué está detallado en la
+        <a href={url("/privacy/")}>política de privacidad</a>.
+      </p>
+
+      <div class="table-scroll" style="margin-top:20px">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Plataforma</th>
+              <th scope="col">Qué hace la integración</th>
+              <th scope="col">Permisos que pide</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>YouTube<br><span class="muted">YouTube Data API v3</span></td>
+              <td>Subir el video aprobado con su título, descripción y miniatura, y leer después su estado de visibilidad.</td>
+              <td><code>youtube.upload</code><br><code>youtube.readonly</code></td>
+            </tr>
+            <tr>
+              <td>TikTok<br><span class="muted">Content Posting API</span></td>
+              <td>Enviar el video aprobado a la bandeja de borradores de la cuenta, para que su dueño lo publique desde la app.</td>
+              <td><code>video.upload</code><br><code>user.info.basic</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="notice">
+        <p>
+          <strong>Logrando Studio no es un servicio para terceros.</strong> Es la
+          herramienta interna con la que el estudio publica en sus propios
+          canales. No gestionamos cuentas ajenas ni ofrecemos publicación como
+          servicio.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="contacto">
+    <div class="wrap">
+      <h2>Contacto</h2>
+      <p>
+        Dudas sobre el estudio, los canales o esta integración:
+        <a href="mailto:virtual.liga@gmail.com">virtual.liga@gmail.com</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,178 @@
+---
+import { url } from "../../lib/url.ts";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Autorización de TikTok — Logrando Studio"
+  description="Página de retorno de la autorización de TikTok para Logrando Studio."
+  noindex={true}
+>
+  <div class="wrap">
+    <section class="hero" style="padding-bottom:8px">
+      <h1 id="title">Autorización de TikTok</h1>
+      <p class="lede" id="subtitle">Leyendo la respuesta de TikTok…</p>
+    </section>
+
+    <div class="prose">
+
+      <!-- Estado: éxito -->
+      <div id="ok" hidden>
+        <div class="notice">
+          <p>
+            <strong>Listo.</strong> Copia la dirección completa de abajo y pégala
+            en la terminal, donde <code>tiktok_auth.py</code> la está esperando.
+          </p>
+        </div>
+
+        <p><strong>Dirección para pegar</strong></p>
+        <pre class="codeblock" id="fullUrl"></pre>
+        <p>
+          <button class="btn" type="button" id="copyBtn">Copiar dirección</button>
+          <span class="muted" id="copyMsg" role="status" aria-live="polite"></span>
+        </p>
+
+        <div class="notice warn">
+          <p>
+            <strong>No compartas esta dirección con nadie.</strong> Contiene un
+            código de autorización de un solo uso para tu cuenta. Caduca en unos
+            minutos; si expira, vuelve a correr el script y repite el proceso.
+          </p>
+        </div>
+
+        <h2>Detalle</h2>
+        <div class="table-scroll">
+          <table>
+            <tbody>
+              <tr><th scope="row" style="width:9rem">Cuenta</th><td id="scopesRow">—</td></tr>
+              <tr><th scope="row">Verificación</th><td id="stateRow">—</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Estado: error devuelto por TikTok -->
+      <div id="err" hidden>
+        <div class="notice warn">
+          <p><strong>TikTok no concedió la autorización.</strong></p>
+          <p id="errDetail" class="muted"></p>
+        </div>
+        <p>
+          Vuelve a correr <code>scripts/tiktok_auth.py</code> y abre la dirección
+          nueva que imprima. Si el error se repite, revisa en el portal de
+          desarrolladores que la app tenga activado el producto Content Posting
+          API con los permisos <code>video.upload</code> y
+          <code>user.info.basic</code>, y que el redirect URI registrado sea
+          exactamente esta dirección.
+        </p>
+      </div>
+
+      <!-- Estado: entrada directa, sin parámetros -->
+      <div id="idle" hidden>
+        <div class="notice">
+          <p>
+            Esta página es el punto de retorno de la autorización de TikTok para
+            Logrando Studio. No tiene nada que hacer si llegaste aquí
+            directamente.
+          </p>
+        </div>
+        <p>
+          Se usa así: <code>scripts/tiktok_auth.py</code> imprime una dirección,
+          la abres, apruebas los permisos con la cuenta del canal, y TikTok te
+          regresa aquí con el código que el script necesita.
+        </p>
+        <p><a class="btn secondary" href={url("/")}>Ir al inicio</a></p>
+      </div>
+
+      <h2>Qué hace esta página</h2>
+      <p>
+        Nada más que leer lo que viene en la dirección y mostrarlo. Es un sitio
+        estático: <strong>el código no se envía a ningún servidor, no se guarda y
+        no sale de tu navegador.</strong> Los detalles están en la
+        <a href={url("/privacy/")}>política de privacidad</a>.
+      </p>
+
+    </div>
+  </div>
+</BaseLayout>
+
+{/*
+  is:inline keeps this script exactly as written instead of letting Astro bundle
+  it into a module. This page is the OAuth return point: it has to run from a
+  plain file load, with no import graph and nothing to fetch first. The code
+  only reads window.location and writes to the DOM -- nothing leaves the browser.
+*/}
+<script is:inline>
+(function () {
+  var params = new URLSearchParams(window.location.search);
+  var code = params.get("code");
+  var error = params.get("error");
+  var state = params.get("state");
+  var scopes = params.get("scopes");
+
+  var title = document.getElementById("title");
+  var subtitle = document.getElementById("subtitle");
+
+  function show(id) {
+    document.getElementById(id).hidden = false;
+  }
+
+  if (error) {
+    title.textContent = "No se concedió la autorización";
+    subtitle.textContent = "TikTok devolvió un error en lugar de un código.";
+    var desc = params.get("error_description") || "";
+    document.getElementById("errDetail").textContent = error + (desc ? " — " + desc : "");
+    show("err");
+    return;
+  }
+
+  if (!code) {
+    title.textContent = "Autorización de TikTok";
+    subtitle.textContent = "Esta página espera el retorno de TikTok.";
+    show("idle");
+    return;
+  }
+
+  title.textContent = "Autorización concedida";
+  subtitle.textContent = "Copia la dirección y pégala en la terminal.";
+  document.getElementById("fullUrl").textContent = window.location.href;
+  document.getElementById("scopesRow").textContent = scopes ? scopes.replace(/,/g, ", ") : "—";
+  document.getElementById("stateRow").textContent = state
+    ? "state recibido (el script lo compara antes de continuar)"
+    : "sin state — el script rechazará esta dirección";
+  show("ok");
+
+  var btn = document.getElementById("copyBtn");
+  var msg = document.getElementById("copyMsg");
+  btn.addEventListener("click", function () {
+    var text = window.location.href;
+    function done() {
+      msg.textContent = "  Copiado.";
+      setTimeout(function () { msg.textContent = ""; }, 2500);
+    }
+    // clipboard.writeText needs a secure context and can still be blocked;
+    // the textarea fallback keeps the page usable either way.
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(done, fallback);
+    } else {
+      fallback();
+    }
+    function fallback() {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand("copy");
+        done();
+      } catch (e) {
+        msg.textContent = "  Cópiala manualmente del recuadro.";
+      }
+      document.body.removeChild(ta);
+    }
+  });
+})();
+</script>

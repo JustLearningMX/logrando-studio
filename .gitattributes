@@ -1,0 +1,20 @@
+# The CI runs on ubuntu-latest. A shell script checked out with CRLF endings
+# dies there with "bad interpreter: /bin/bash^M", so line endings are pinned
+# in the repo rather than left to each machine's core.autocrlf.
+* text=auto eol=lf
+
+*.sh text eol=lf
+*.mjs text eol=lf
+*.js text eol=lf
+*.ts text eol=lf
+*.tsx text eol=lf
+*.astro text eol=lf
+*.css text eol=lf
+*.json text eol=lf
+*.yml text eol=lf
+*.md text eol=lf
+
+*.png binary
+*.jpg binary
+*.ico binary
+*.woff2 binary

@@ -1,0 +1,224 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Política de privacidad — Logrando Studio"
+  description="Qué datos usa Logrando Studio, para qué, dónde se guardan y cómo revocar el acceso."
+>
+  <div class="wrap">
+    <section class="hero" style="padding-bottom:16px">
+      <h1>Política de privacidad</h1>
+      <p class="lede">
+        Vigente desde el 21 de septiembre de 2026. Última actualización: 21 de
+        septiembre de 2026.
+      </p>
+    </section>
+
+    <div class="prose">
+
+      <div class="notice">
+        <p>
+          <strong>En corto:</strong> Logrando Studio es la herramienta con la que
+          este estudio publica sus propios videos en sus propias cuentas. No
+          recolectamos datos de visitantes, no vendemos información y no
+          compartimos con terceros los datos que las plataformas nos dan. Los
+          permisos que pedimos a YouTube y TikTok sirven para una sola cosa:
+          subir nuestros videos.
+        </p>
+      </div>
+
+      <h2>1. Quién es el responsable</h2>
+      <p>
+        Logrando Studio es un proyecto personal operado por Hiram Chávez, en
+        México. Para cualquier asunto relacionado con esta política:
+        <a href="mailto:virtual.liga@gmail.com">virtual.liga@gmail.com</a>.
+      </p>
+
+      <h2>2. Qué es esta aplicación</h2>
+      <p>
+        Logrando Studio es un sistema de producción y publicación de video que el
+        estudio usa para sus propios canales. Se ejecuta en la computadora
+        personal del operador. No es un servicio abierto: no administra cuentas
+        de terceros, no ofrece publicación como servicio y no tiene usuarios
+        además del propio operador.
+      </p>
+      <p>
+        Este sitio web es la cara pública del estudio. Es un sitio estático,
+        alojado en GitHub Pages.
+      </p>
+
+      <h2>3. Datos de quien visita este sitio</h2>
+      <p>
+        Este sitio <strong>no usa cookies, ni analítica, ni rastreadores, ni
+        publicidad</strong>, y no tiene formularios. No creamos perfiles de
+        visitantes ni guardamos información sobre ellos.
+      </p>
+      <p>
+        El sitio se sirve desde GitHub Pages, y carga tipografías desde Google
+        Fonts. Ambos proveedores pueden registrar datos técnicos de la conexión
+        (como la dirección IP y el tipo de navegador) en sus propios registros,
+        como parte de la entrega del contenido. Ese procesamiento es de ellos y
+        se rige por sus políticas:
+        <a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener">GitHub</a>
+        y <a href="https://policies.google.com/privacy" rel="noopener">Google</a>.
+        Nosotros no tenemos acceso a esos registros.
+      </p>
+
+      <h2>4. Datos que obtenemos de las plataformas</h2>
+      <p>
+        Cuando el operador conecta una cuenta propia del estudio a la
+        herramienta, la plataforma nos concede permisos específicos. Esto es todo
+        lo que pedimos y por qué:
+      </p>
+
+      <h3>YouTube (YouTube Data API v3)</h3>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Permiso</th>
+              <th scope="col">Para qué lo usamos</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>youtube.upload</code></td>
+              <td>Subir al canal del estudio un video ya producido y aprobado, con su título, descripción, etiquetas y miniatura. Se sube en privado; la decisión de hacerlo público la toma una persona.</td>
+            </tr>
+            <tr>
+              <td><code>youtube.readonly</code></td>
+              <td>Confirmar a qué canal quedó conectada la autorización (para no subir al canal equivocado) y leer después la visibilidad de un video ya subido, para mantener el registro al día.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted" style="margin-top:12px">
+        No pedimos permisos para editar ni borrar videos existentes, ni para leer
+        comentarios, suscriptores o datos de la audiencia.
+      </p>
+
+      <h3>TikTok (Content Posting API y Login Kit)</h3>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Permiso</th>
+              <th scope="col">Para qué lo usamos</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>video.upload</code></td>
+              <td>Enviar el archivo de video aprobado a la bandeja de borradores de la cuenta del estudio, para que su dueño escriba el texto y lo publique desde la app de TikTok.</td>
+            </tr>
+            <tr>
+              <td><code>user.info.basic</code></td>
+              <td>Leer el identificador y el nombre visible de la cuenta autorizada, únicamente para confirmar que el video se va a enviar a la cuenta correcta y detenerse si no coincide.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted" style="margin-top:12px">
+        No pedimos permiso para publicar directamente en el feed, ni para leer
+        videos, seguidores, mensajes o estadísticas de la cuenta.
+      </p>
+
+      <h2>5. Uso limitado de los datos de Google</h2>
+      <p>
+        El uso y la transferencia que Logrando Studio hace de la información
+        recibida de las APIs de Google se apega a la
+        <a href="https://developers.google.com/terms/api-services-user-data-policy" rel="noopener">Google API Services User Data Policy</a>,
+        incluidos sus requisitos de Uso Limitado (<em>Limited Use</em>).
+      </p>
+      <p>En concreto, los datos que obtenemos de Google:</p>
+      <ul>
+        <li>se usan solamente para las funciones descritas en esta política;</li>
+        <li>no se transfieren a terceros, salvo que la ley lo exija;</li>
+        <li>no se usan para publicidad, ni para perfilar o segmentar personas;</li>
+        <li>no se venden bajo ninguna circunstancia;</li>
+        <li>no son leídos por personas ajenas al operador del estudio, salvo que la ley lo exija o el usuario lo autorice expresamente.</li>
+      </ul>
+
+      <h2>6. Dónde se guardan las credenciales</h2>
+      <p>
+        Los tokens de acceso y actualización que emiten Google y TikTok se
+        guardan <strong>únicamente en la computadora personal del operador</strong>,
+        en una carpeta fuera de cualquier repositorio de código, y nunca se
+        suben a este sitio, a GitHub ni a ningún servidor nuestro. Este sitio web
+        es estático: no tiene base de datos ni recibe información de nadie.
+      </p>
+      <p>
+        La página de retorno de autorización de TikTok
+        (<code>/tiktok/callback/</code>) solo muestra en pantalla el código que la
+        plataforma envía en la dirección, para que el operador lo copie a su
+        propia terminal. Ese código no se envía a ningún servidor, no se guarda y
+        no sale del navegador.
+      </p>
+
+      <h2>7. Cuánto tiempo conservamos los datos</h2>
+      <p>
+        Las credenciales se conservan mientras la integración siga en uso, y se
+        borran cuando se revoca el acceso o cuando dejan de ser válidas. La
+        información de la cuenta que leemos (identificador y nombre visible) se
+        usa en el momento de la verificación y se guarda solo dentro del registro
+        local de publicaciones del estudio.
+      </p>
+
+      <h2>8. Cómo revocar el acceso</h2>
+      <p>
+        El dueño de cualquier cuenta conectada puede retirar el permiso en
+        cualquier momento, sin pedírnoslo:
+      </p>
+      <ul>
+        <li>
+          <strong>Google / YouTube:</strong>
+          <a href="https://myaccount.google.com/permissions" rel="noopener">myaccount.google.com/permissions</a>
+          → seleccionar la aplicación → quitar el acceso.
+        </li>
+        <li>
+          <strong>TikTok:</strong> en la app, Perfil → Menú → Configuración y
+          privacidad → Seguridad y permisos → Administrar permisos de
+          aplicaciones → quitar el acceso.
+        </li>
+      </ul>
+      <p>
+        Al revocar, los tokens guardados dejan de funcionar de inmediato. Para
+        pedir que borremos cualquier dato que conservemos, escribe a
+        <a href="mailto:virtual.liga@gmail.com">virtual.liga@gmail.com</a>;
+        respondemos en un plazo máximo de 30 días.
+      </p>
+
+      <h2>9. Menores de edad</h2>
+      <p>
+        Esta herramienta no está dirigida a menores de edad y no recolecta
+        deliberadamente información de ellos. Algunos canales del estudio pueden
+        producir contenido apto para público infantil; eso se declara en la
+        plataforma correspondiente y no implica ninguna recolección de datos por
+        nuestra parte.
+      </p>
+
+      <h2>10. Seguridad</h2>
+      <p>
+        Las credenciales viven solo en el equipo del operador, protegidas por el
+        control de acceso del propio sistema operativo, y toda comunicación con
+        las plataformas ocurre sobre HTTPS. Ningún sistema es infalible: si
+        detectamos un incidente que afecte datos de una cuenta conectada, lo
+        informaremos por el correo de contacto.
+      </p>
+
+      <h2>11. Cambios a esta política</h2>
+      <p>
+        Si cambiamos esta política, actualizaremos la fecha del encabezado. El
+        historial completo de cambios es público en el repositorio de este sitio.
+      </p>
+
+      <h2>12. Contacto</h2>
+      <p>
+        Hiram Chávez — Logrando Studio<br>
+        <a href="mailto:virtual.liga@gmail.com">virtual.liga@gmail.com</a>
+      </p>
+
+    </div>
+  </div>
+</BaseLayout>

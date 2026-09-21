@@ -1,0 +1,18 @@
+---
+import { url } from "../lib/url.ts";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Página no encontrada — Logrando Studio"
+  description="La página que buscas no existe."
+  noindex={true}
+>
+  <div class="wrap">
+    <section class="hero">
+      <h1>404</h1>
+      <p class="lede">Esta página no existe.</p>
+      <p style="margin-top:24px"><a class="btn" href={url("/")}>Ir al inicio</a></p>
+    </section>
+  </div>
+</BaseLayout>

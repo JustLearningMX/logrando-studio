@@ -1,0 +1,79 @@
+---
+import { url } from "../../lib/url.ts";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="deviatips — Logrando Studio"
+  description="deviatips: tips de programación en 60 segundos. Un bug o una trampa del lenguaje por video, con código real que sí se ejecutó."
+>
+  <div class="wrap">
+
+    <section class="hero" style="padding-bottom:16px">
+      <p class="muted" style="margin:0 0 8px"><a href={url("/#canales")}>← Canales</a></p>
+      <h1><span style="font-family:var(--mono);color:var(--primary)">[/]</span> deviatips</h1>
+      <p class="lede">
+        Tips de programación, en 60 segundos. Un bug o una trampa del lenguaje
+        por video — de esos que no lanzan error, simplemente te devuelven algo
+        que no esperabas.
+      </p>
+      <ul class="pill-row" style="margin-top:20px">
+        <li class="pill">Español · México</li>
+        <li class="pill">Vertical 9:16</li>
+        <li class="pill">YouTube</li>
+        <li class="pill">TikTok</li>
+      </ul>
+    </section>
+
+    <section class="section" style="padding-top:24px">
+      <h2>Qué vas a encontrar</h2>
+      <div class="grid" style="margin-top:20px">
+        <div class="card">
+          <h3>Código que sí corrió</h3>
+          <p class="muted">
+            Cada snippet que aparece en pantalla se ejecuta antes de grabarse. Si
+            el video dice que devuelve cero filas, es porque devolvió cero filas.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Un solo concepto</h3>
+          <p class="muted">
+            Un video, una idea: por qué pasa, cómo se ve cuando te muerde en
+            producción, y cuál es el arreglo. Sin relleno.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Por niveles</h3>
+          <p class="muted">
+            De básico a medio-avanzado. El título nunca asume que ya sabes el
+            término técnico — la idea es que entiendas por qué deberías
+            importarte.
+          </p>
+        </div>
+      </div>
+
+      <h2>Temas que ya salieron</h2>
+      <ul class="pill-row">
+        <li class="pill">JavaScript</li>
+        <li class="pill">Python</li>
+        <li class="pill">SQL</li>
+      </ul>
+      <p class="muted" style="margin-top:16px">
+        Comparaciones que mienten, ordenamientos que no ordenan, consultas que se
+        vacían por un dato faltante, y funciones que recuerdan lo que les pasaste
+        la vez anterior.
+      </p>
+
+      <h2>Cómo se produce</h2>
+      <p>
+        deviatips se produce con el sistema del estudio: guion, verificación del
+        código, narración, subtítulos sincronizados palabra por palabra,
+        miniatura y render. Antes de publicarse, cada video pasa por revisiones
+        independientes de exactitud técnica y de coherencia, y por una revisión
+        final de una persona. Los detalles del proceso están en
+        <a href={url("/#como-funciona")}>cómo funciona</a>.
+      </p>
+    </section>
+
+  </div>
+</BaseLayout>
