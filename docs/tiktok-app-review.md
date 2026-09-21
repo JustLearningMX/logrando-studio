@@ -21,6 +21,14 @@ de contenido en español, pero la explicación de scopes se lee mejor en inglés
 | Website URL | `https://justlearningmx.github.io/logrando-studio/` |
 | Login Kit redirect URI | `https://justlearningmx.github.io/logrando-studio/tiktok/callback/` |
 
+**Verificación de propiedad**: por **URL prefix**, no por dominio. El prefijo
+`https://justlearningmx.github.io/logrando-studio/` cubre las cuatro URLs de un
+golpe. Por dominio habría exigido el archivo de firma en la raíz de
+`justlearningmx.github.io`, que es el sitio personal del dueño y está fuera de
+alcance. El archivo es `public/tiktokVK4dgDqUcQq8KduB4Fuu8VjOoSSnG71L.txt`:
+**el nombre es `tiktok` + la firma + `.txt`**, tal cual lo entrega el portal, no
+un nombre genérico. `verify-build.mjs` lo vigila.
+
 **Por qué "Web":** el flujo usa un redirect URI `https://` y el intercambio del
 código ocurre fuera del navegador, con el client secret. Eso es exactamente la
 definición de app Web en TikTok, y es la razón por la que no usamos PKCE
@@ -78,8 +86,36 @@ direct messages or analytics, and it cannot edit or delete existing posts.
 
 ---
 
+## El video demo
+
+**No es contenido del canal, es una grabación de pantalla de la integración.**
+TikTok verifica que cada scope solicitado aparezca en el video, y "la demo no
+cubre un scope" es de las causas más comunes de rechazo. Debe mostrar, en orden:
+
+1. La barra de direcciones con el dominio declarado
+2. El botón "Conectar cuenta de TikTok" en `/app/`
+3. La pantalla de consentimiento de TikTok — *Login Kit*
+4. El regreso al callback
+5. La terminal confirmando la cuenta — *user.info.basic*
+6. La subida llegando a `SEND_TO_USER_INBOX` — *video.upload*
+7. La notificación en el teléfono
+8. **Una persona escribiendo el caption y publicando** — la evidencia de por qué
+   no pedimos `video.publish`
+
+Formato: mp4 o mov, máximo 5 archivos de 50 MB cada uno. Grabado en sandbox,
+que es requisito para una app que nunca ha sido aprobada.
+
+> **Revisa la grabación cruda cuadro por cuadro antes de enviarla.** La primera
+> toma traía la fototeca personal del dueño en pantalla dos veces (el diálogo de
+> permisos de TikTok y el selector) y el video de una tercera persona en el feed
+> "Para ti". Ambos recortados. Una grabación de pantalla sin revisar es una fuga
+> de privacidad esperando a ocurrir.
+
+Una terminal comprime muchísimo: el clip 1 pasó de 66.7 MB a 2.1 MB sin perder
+legibilidad, porque es contenido casi estático y el grabador gastaba 8.35 Mbps.
+
 ## Historial de envíos
 
 | Fecha | Cambio |
 |---|---|
-| — | Nada enviado todavía. |
+| 2026-09-21 | Primer envío. Login Kit (`user.info.basic`) + Content Posting API (`video.upload`). Dos clips: autorización y subida desde la compu, publicación desde el teléfono. **Pendiente de resolución.** |

@@ -12,11 +12,16 @@ cambiaron. Las diferencias están marcadas abajo.
 
 | Pieza | Estado |
 |---|---|
-| Sitio público (landing, legales, canal, callback OAuth) | **Construido y verificado** |
-| Isla React en `/app/` | **Andamio** — hidrata y renderiza, sin lógica |
+| Sitio público (landing, legales, canal, callback OAuth) | **En vivo** |
+| Conexión de cuentas de TikTok en `/app/` | **Funcionando** — usada en una publicación real |
+| Panel de publicaciones en `/app/` | **Andamio** — la isla hidrata, sin lógica |
 | `logrando-studio-api` (backend) | **Definido aquí, no construido** |
 | Base de datos | **Definida en DASHBOARD_DESIGN.md, no construida** |
 | Login del panel | **Definido aquí, no construido** |
+
+El 2026-09-21 este sitio fue el punto de entrada de una autorización real de
+TikTok que terminó con un video publicado en `@deviatips`. O sea que `/app/` ya
+no es solo andamio: la mitad de conexión de cuentas es código en producción.
 
 La razón del recorte es explícita: lo urgente era desbloquear la publicación en
 TikTok y quitar el vencimiento de 7 días del token de YouTube. Ambas cosas solo
@@ -54,7 +59,7 @@ La regla que ordena todo: **el sitio es estático salvo `/app/`.**
 | `/privacy/`, `/terms/` | HTML estático | Registradas en dos portales externos |
 | `/channels/<slug>/` | HTML estático | Contenido, una por canal |
 | `/tiktok/callback/` | HTML + script `is:inline` | Retorno de OAuth |
-| `/app/` | Isla React (`client:only`) | Datos autenticados por visitante |
+| `/app/` | Islas React | Conectar cuentas (`client:load`) + panel (`client:only`) |
 
 **Lo que protege esa regla.** Las tres primeras filas las abre un revisor en
 frío, sin sesión y a veces con scripts bloqueados. Si dependieran de hidratación,
@@ -65,6 +70,29 @@ texto legal presente con los `<script>` removidos**.
 
 El callback usa `is:inline` a propósito: es el punto de retorno de OAuth y tiene
 que correr desde una carga de archivo plano, sin grafo de imports.
+
+### La conexión de cuentas de TikTok (ya construida)
+
+`/app/` monta `TikTokConnect`, que arma la URL de autorización y manda el
+navegador a TikTok. Existe por una razón concreta: **TikTok exige que el video
+demo de la revisión muestre la integración ocurriendo en el sitio declarado**,
+con interfaz e interacción real. Mientras el flujo vivía solo en una terminal,
+el sitio no era más que el callback y eso se lee como desalineación.
+
+Tres cosas que no hay que romper:
+
+- **El `client_key` es público y va en el bundle**, como cualquier `client_id`
+  de OAuth: viaja en la URL de autorización de todos modos. El `client_secret`
+  **nunca** toca este repo; vive en la máquina del operador, que es donde se
+  intercambia el código por un token.
+- **El `state` se genera aquí y lo valida el callback** contra `sessionStorage`.
+  Es su lugar natural en un flujo web. Un `state` que no coincide descarta el
+  código **sin escribirlo al DOM** — verificado en navegador con un state
+  falsificado.
+- **Sandbox y producción son apps distintas con llaves distintas.** Las dos
+  viven en `src/config/tiktok.ts`; `?env=production` cambia sin recompilar. El
+  archivo de credenciales del operador espeja esto. Enviar la llave de un
+  entorno con el secreto del otro falla tarde y sin decir por qué.
 
 ### Cuando se retome el panel
 
@@ -149,8 +177,10 @@ nunca una fila única por plataforma.
 
 ## Fases
 
-1. ~~Páginas estáticas + callback OAuth~~ — **hecho**. Falta publicar el repo,
-   prender Pages, registrar el dominio en Google y mover la app a Production.
+1. ~~Páginas estáticas + callback OAuth~~ — **hecho y en vivo**, más la
+   conexión de cuentas de TikTok y la verificación de propiedad de URL. Falta
+   registrar el dominio en Google y mover esa app a Production, que es lo que
+   termina con el vencimiento de 7 días del token de YouTube.
 2. Esquema + contrato de la API — parcialmente aquí y en `DASHBOARD_DESIGN.md`.
 3. `logrando-studio-api`: login con Google, allowlist, endpoints de lectura, `/sync/ledger`.
 4. Panel real en la isla de `/app/`.
