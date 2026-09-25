@@ -1,0 +1,86 @@
+---
+import { url } from "../../lib/url.ts";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Lo que cuentan por ahí — Logrando Studio"
+  description="Lo que cuentan por ahí: leyendas mexicanas, contadas completas. Historias originales, ancladas en el folclor real, narradas en capítulos."
+>
+  <div class="wrap">
+
+    <section class="hero" style="padding-bottom:16px">
+      <p class="muted" style="margin:0 0 8px"><a href={url("/#canales")}>← Canales</a></p>
+      <h1>Lo que cuentan por ahí</h1>
+      <p class="lede">
+        Leyendas mexicanas, contadas completas. Algo que alguien cuenta, que
+        alguien oyó, que nadie firma — narrado de principio a fin, sin cortar
+        la historia a la mitad.
+      </p>
+      <ul class="pill-row" style="margin-top:20px">
+        <li class="pill">Español · México</li>
+        <li class="pill">Horizontal 16:9</li>
+        <li class="pill">~15 minutos</li>
+      </ul>
+
+      <p style="margin-top:24px">
+        <a class="btn" href="https://www.youtube.com/@loquecuentanporahi" rel="noopener">Ver en YouTube</a>
+      </p>
+    </section>
+
+    <section class="section" style="padding-top:24px">
+      <h2>Qué vas a encontrar</h2>
+      <div class="grid" style="margin-top:20px">
+        <div class="card">
+          <h3>Historias originales</h3>
+          <p class="muted">
+            Cada leyenda es nueva, pero se ancla en el folclor real: el Charro
+            Negro, los pozos secos, los pueblos donde todos conocen la regla y
+            nadie la explica.
+          </p>
+        </div>
+        <div class="card">
+          <h3>En tres capítulos</h3>
+          <p class="muted">
+            Cada historia se cuenta en tres capítulos de unos cinco minutos. Cada
+            uno arranca en movimiento y cierra con un gancho; juntos son el video
+            completo.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Contadas de segunda mano</h3>
+          <p class="muted">
+            Como se cuentan las leyendas de verdad: alguien que lo oyó de alguien
+            más. Texto en pantalla sobre fondo oscuro, para escucharse con la luz
+            apagada.
+          </p>
+        </div>
+      </div>
+
+      <h2>Ya salió</h2>
+      <div class="grid" style="margin-top:20px">
+        <a class="card card-link" href="https://youtu.be/vcJcaWEYQDk" rel="noopener">
+          <span class="tag">Leyenda mexicana</span>
+          <h3>El Jinete que Espera en el Cerro</h3>
+          <p class="muted">
+            En mi familia hay una regla que nadie rompe: si oyes cascos de
+            caballo en la oscuridad, y nadie más los oye, no volteas. Nunca.
+          </p>
+          <p style="margin-bottom:0"><span class="muted">El Charro Negro · 3 capítulos · 15 min</span></p>
+        </a>
+      </div>
+
+      <h2>Cómo se produce</h2>
+      <p>
+        Lo que cuentan por ahí se produce con el sistema del estudio: guion,
+        narración, subtítulos sincronizados palabra por palabra, miniatura y
+        render. Antes de publicarse, cada guion pasa por una revisión narrativa
+        independiente — que los giros sorprendan y estén sembrados, que el
+        folclor sea consistente — y cada video por una revisión final de una
+        persona. Los detalles del proceso están en
+        <a href={url("/#como-funciona")}>cómo funciona</a>.
+      </p>
+    </section>
+
+  </div>
+</BaseLayout>

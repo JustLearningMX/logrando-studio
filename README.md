@@ -37,6 +37,7 @@ src/pages/
   privacy.astro              → /privacy/                estático ← portales
   terms.astro                → /terms/                  estático ← portales
   channels/deviatips.astro   → /channels/deviatips/     estático
+  channels/lo-que-cuentan-por-ahi.astro → /channels/lo-que-cuentan-por-ahi/
   tiktok/callback.astro      → /tiktok/callback/        estático + script inline
   app/index.astro            → /app/                    isla React
   404.astro
