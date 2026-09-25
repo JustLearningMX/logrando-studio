@@ -85,8 +85,8 @@ body::before {
 
 .wordmark {
   display: inline-flex;
-  align-items: baseline;
-  gap: 8px;
+  align-items: center;
+  gap: 10px;
   font-weight: 700;
   font-size: 1.05rem;
   letter-spacing: -0.01em;
@@ -94,9 +94,12 @@ body::before {
   text-decoration: none;
 }
 
+/* public/icon.svg, the same file as the favicon and the TikTok app icon. */
 .wordmark .mark {
-  font-family: var(--mono);
-  color: var(--primary);
+  display: block;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
 }
 
 .site-nav {

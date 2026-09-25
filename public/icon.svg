@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <!--
+    Logrando Studio mark: the [▸] of the site header, drawn as shapes instead
+    of text so it never depends on a font being installed. This one file is the
+    source of the favicon, the header logo and the TikTok developer app icon;
+    TikTok's review requires the three to match (rejected 2026-09-25 when the
+    app carried the deviatips icon). Rasterize with scripts/render-icon.mjs.
+  -->
+  <rect width="1024" height="1024" fill="#0b0f1a"/>
+  <g fill="none" stroke="#22d3ee" stroke-width="64" stroke-linecap="butt" stroke-linejoin="miter">
+    <path d="M 368 280 H 280 V 744 H 368"/>
+    <path d="M 656 280 H 744 V 744 H 656"/>
+  </g>
+  <polygon points="436,400 436,624 628,512" fill="#f87171" stroke="#f87171" stroke-width="20" stroke-linejoin="round"/>
+</svg>

@@ -38,10 +38,10 @@ const nav = [
     <title>{title}</title>
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
-    <link
-      rel="icon"
-      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>"
-    />
+    <!-- Same mark as the TikTok developer app icon: its review checks they match. -->
+    <link rel="icon" type="image/svg+xml" href={url("/icon.svg")} />
+    <link rel="icon" type="image/png" sizes="32x32" href={url("/favicon-32.png")} />
+    <link rel="apple-touch-icon" href={url("/apple-touch-icon.png")} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -53,7 +53,7 @@ const nav = [
   <body>
     <header class="site-header">
       <div class="wrap">
-        <a class="wordmark" href={url("/")}><span class="mark">[▸]</span> Logrando Studio</a>
+        <a class="wordmark" href={url("/")}><img class="mark" src={url("/icon.svg")} alt="" width="36" height="36" /> Logrando Studio</a>
         <nav class="site-nav" aria-label="Principal">
           {nav.map((item) => <a href={item.href}>{item.label}</a>)}
         </nav>

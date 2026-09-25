@@ -118,4 +118,23 @@ legibilidad, porque es contenido casi estático y el grabador gastaba 8.35 Mbps.
 
 | Fecha | Cambio |
 |---|---|
-| 2026-09-21 | Primer envío. Login Kit (`user.info.basic`) + Content Posting API (`video.upload`). Dos clips: autorización y subida desde la compu, publicación desde el teléfono. **Pendiente de resolución.** |
+| 2026-09-21 | Primer envío. Login Kit (`user.info.basic`) + Content Posting API (`video.upload`). Dos clips: autorización y subida desde la compu, publicación desde el teléfono. **Rechazado 2026-09-25**, sólo por el ícono (ver abajo). |
+| 2026-09-25 | Reenvío con un único cambio: **App icon** → `public/icon-1024.png`. Todo lo demás (campos, texto de scopes, clips) igual que el 09-21. **Pendiente de resolución.** |
+
+## El ícono tiene que ser el mismo en tres lugares
+
+Rechazo del 2026-09-25, textual: *"The app icon submitted in the Basic Info does
+not match the icon displayed on the website. Please ensure the same icon is used
+consistently across both the TikTok, the website and Browser tab (favicon)."*
+
+El primer envío llevaba el ícono de **deviatips**, pero la app se llama Logrando
+Studio y el sitio no mostraba ningún ícono (el favicon era un emoji 🎬 y el
+encabezado, el texto `[▸]`). La app es del estudio, no de un canal: autoriza
+también los TikTok de los canales que vengan. Por eso el ícono es el `[▸]` del
+estudio y no el de ningún canal.
+
+**Una sola fuente:** `public/icon.svg`. De ahí salen el favicon, el logo del
+encabezado (`BaseLayout.astro`) y los PNG (`node scripts/render-icon.mjs`), incluido
+`icon-1024.png`, que es el que se sube al portal. Si cambias el ícono, cámbialo en
+el SVG, regenera y **vuelve a subirlo a TikTok**; si no, la siguiente revisión
+se rechaza por lo mismo.
