@@ -1,6 +1,27 @@
 ---
 import { url } from "../../lib/url.ts";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+
+// Los shorts publicados, del más reciente al más viejo. Enlaces tomados de
+// cada publish_status.json del archivo (C:\OpenMontage-Content\devtip\<id>\).
+const videos = [
+  { title: "¿Por qué este ciclo de JavaScript cuenta 3, 3, 3 en vez de 0, 1, 2?", tag: "JavaScript · medio-avanzado",
+    youtube: "https://youtu.be/_jDZIO73XWM", tiktok: "https://www.tiktok.com/@deviatips/video/7689127871826234645" },
+  { title: "¿Por qué Python cambia tres casillas si solo tocaste una?", tag: "Python · básico",
+    youtube: "https://youtu.be/7alw1ky86x8", tiktok: "https://www.tiktok.com/@deviatips/video/7689127589218241813" },
+  { title: "¿Por qué esta consulta SQL se queda vacía por un solo dato faltante?", tag: "SQL · medio-avanzado",
+    youtube: "https://youtu.be/NHMIp0UCpjs", tiktok: "https://www.tiktok.com/@deviatips/video/7688415720417332501" },
+  { title: "¿Por qué JavaScript pone el 10 antes del 2 al ordenar tus números?", tag: "JavaScript · básico",
+    youtube: "https://youtu.be/XFdE10oPn2E", tiktok: "https://www.tiktok.com/@deviatips/video/7688116645918772500" },
+  { title: "¿Por qué esta función de Python recuerda lo que le pasaste antes?", tag: "Python · medio",
+    youtube: "https://youtu.be/uR2ZlB85abs", tiktok: "https://www.tiktok.com/@deviatips/video/7688405228957338900" },
+  { title: "¿Por qué tu consulta SQL regresa vacía si los datos sí existen?", tag: "SQL · medio",
+    youtube: "https://youtu.be/kfjCKktF4ho", tiktok: "https://www.tiktok.com/@deviatips/video/7688404146805837077" },
+  { title: "¿Por qué JavaScript no encuentra un dato que sí está en tu lista?", tag: "JavaScript · medio",
+    youtube: "https://youtu.be/nS0r-3ma7Qk", tiktok: "https://www.tiktok.com/@deviatips/video/7688403249963175189" },
+  { title: "¿Por qué JavaScript dice que 0.1 + 0.2 no es 0.3?", tag: "JavaScript · básico",
+    youtube: "https://youtu.be/CpXlO3Befmo", tiktok: "https://www.tiktok.com/@deviatips/video/7688403641983667476" },
+];
 ---
 
 <BaseLayout
@@ -67,6 +88,21 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
         la vez anterior, listas cuyas filas cambian todas juntas, y ciclos que
         al final sólo recuerdan su último valor.
       </p>
+
+      <h2>Ya salió</h2>
+      <div class="grid" style="margin-top:20px">
+        {videos.map((v) => (
+          <div class="card">
+            <span class="tag">{v.tag}</span>
+            <h3>{v.title}</h3>
+            <p style="margin-bottom:0">
+              <a href={v.youtube} rel="noopener">YouTube</a>
+              <span class="muted"> · </span>
+              <a href={v.tiktok} rel="noopener">TikTok</a>
+            </p>
+          </div>
+        ))}
+      </div>
 
       <h2>Cómo se produce</h2>
       <p>
