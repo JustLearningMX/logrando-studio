@@ -119,7 +119,7 @@ legibilidad, porque es contenido casi estático y el grabador gastaba 8.35 Mbps.
 | Fecha | Cambio |
 |---|---|
 | 2026-09-21 | Primer envío. Login Kit (`user.info.basic`) + Content Posting API (`video.upload`). Dos clips: autorización y subida desde la compu, publicación desde el teléfono. **Rechazado 2026-09-25**, sólo por el ícono (ver abajo). |
-| 2026-09-25 | Reenvío con un único cambio: **App icon** → `public/icon-1024.png`. Todo lo demás (campos, texto de scopes, clips) igual que el 09-21. **Pendiente de resolución.** |
+| 2026-09-25 | Reenvío con un único cambio: **App icon** → `public/icon-1024.png`. Todo lo demás (campos, texto de scopes, clips) igual que el 09-21. Motivo declarado (el campo admite 120 caracteres): *"Updated the app icon so the same icon is used on TikTok, the website and the favicon. No other changes."* **Enviado; pendiente de resolución.** |
 
 ## El ícono tiene que ser el mismo en tres lugares
 
