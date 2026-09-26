@@ -5,6 +5,12 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 // Los shorts publicados, del más reciente al más viejo. Enlaces tomados de
 // cada publish_status.json del archivo (C:\OpenMontage-Content\devtip\<id>\).
 const videos = [
+  { title: "¿Por qué JavaScript convierte tu 7 en NaN con esta línea tan común?", tag: "JavaScript · medio",
+    youtube: "https://youtu.be/BWKLML_Mg88", tiktok: "https://www.tiktok.com/@deviatips/video/7689656175775763732" },
+  { title: "¿Por qué SQL dice que 7 entre 10 es cero?", tag: "SQL · básico",
+    youtube: "https://youtu.be/7dCEysLqJkc", tiktok: "https://www.tiktok.com/@deviatips/video/7689655909110254869" },
+  { title: "¿Por qué Python se salta un número cuando limpias tu lista?", tag: "Python · básico",
+    youtube: "https://youtu.be/KU2Gy-ZRCcU", tiktok: "https://www.tiktok.com/@deviatips/video/7689655658832006452" },
   { title: "¿Por qué este ciclo de JavaScript cuenta 3, 3, 3 en vez de 0, 1, 2?", tag: "JavaScript · medio-avanzado",
     youtube: "https://youtu.be/_jDZIO73XWM", tiktok: "https://www.tiktok.com/@deviatips/video/7689127871826234645" },
   { title: "¿Por qué Python cambia tres casillas si solo tocaste una?", tag: "Python · básico",
@@ -85,8 +91,10 @@ const videos = [
       <p class="muted" style="margin-top:16px">
         Comparaciones que mienten, ordenamientos que no ordenan, consultas que se
         vacían por un dato faltante, funciones que recuerdan lo que les pasaste
-        la vez anterior, listas cuyas filas cambian todas juntas, y ciclos que
-        al final sólo recuerdan su último valor.
+        la vez anterior, listas cuyas filas cambian todas juntas, ciclos que
+        al final sólo recuerdan su último valor, conversiones que devuelven
+        NaN, divisiones que pierden los decimales y filtros que se saltan
+        elementos.
       </p>
 
       <h2>Ya salió</h2>
