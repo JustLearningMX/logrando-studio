@@ -28,7 +28,7 @@
 export type TikTokEnv = "sandbox" | "production";
 
 /** Default environment. Flip once TikTok approves the app. */
-const DEFAULT_ENV: TikTokEnv = "sandbox";
+const DEFAULT_ENV: TikTokEnv = "production";
 
 const CLIENT_KEYS: Record<TikTokEnv, string> = {
   sandbox: "sbaw63kh49zvhpnjqu",
