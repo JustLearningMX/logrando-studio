@@ -1,0 +1,69 @@
+---
+// Estante de videos publicados: una rejilla centrada que muestra dos filas de
+// cards y hace scroll vertical a partir de la tercera (dueño, 2026-09-29: la
+// sección "Ya salió" crece con cada video y se volvía desproporcionada).
+//
+// El alto se mide en el navegador porque ninguna card tiene alto fijo: depende
+// del texto y de cuántas columnas caben en la pantalla. Sin JavaScript el
+// estante simplemente muestra todo, como antes.
+interface Props {
+  label: string;
+}
+const { label } = Astro.props;
+---
+
+<div class="shelf" role="region" aria-label={label} tabindex="0">
+  <div class="grid shelf-grid">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .shelf {
+    position: relative;
+    margin: 20px auto 0;
+    max-width: 1080px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 4px 10px 4px 4px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  .shelf:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 4px;
+  }
+  .shelf-grid {
+    margin: 0;
+  }
+  .shelf::-webkit-scrollbar {
+    width: 8px;
+  }
+  .shelf::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 999px;
+  }
+</style>
+
+<script>
+  // Two rows tall: the container ends where the third row starts.
+  function fit(shelf: HTMLElement) {
+    const grid = shelf.firstElementChild as HTMLElement | null;
+    if (!grid) return;
+    shelf.style.maxHeight = "none";
+    const cards = Array.from(grid.children) as HTMLElement[];
+    const tops = [...new Set(cards.map((c) => c.offsetTop))].sort((a, b) => a - b);
+    if (tops.length <= 2) return;
+    const gap = parseFloat(getComputedStyle(grid).rowGap) || 0;
+    const secondRowBottom = tops[2] - gap;
+    // A few pixels more than two rows so the start of the third one peeks out:
+    // that is what tells the visitor there is more below.
+    shelf.style.maxHeight = `${secondRowBottom + 36}px`;
+  }
+  function fitAll() {
+    document.querySelectorAll<HTMLElement>(".shelf").forEach(fit);
+  }
+  fitAll();
+  window.addEventListener("resize", fitAll);
+  document.fonts?.ready.then(fitAll);
+</script>

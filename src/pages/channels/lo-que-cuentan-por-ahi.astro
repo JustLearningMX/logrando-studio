@@ -1,6 +1,7 @@
 ---
 import { url } from "../../lib/url.ts";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import Shelf from "../../components/Shelf.astro";
 ---
 
 <BaseLayout
@@ -60,7 +61,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       </div>
 
       <h2>Ya salió</h2>
-      <div class="grid" style="margin-top:20px">
+      <Shelf label="Leyendas publicadas">
         <a class="card card-link" href="https://youtu.be/TqL5WwjvCKk" rel="noopener">
           <span class="tag">Leyenda del sur</span>
           <h3>El Machete del Abuelo Lucas</h3>
@@ -100,7 +101,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
           </p>
           <p style="margin-bottom:0"><span class="muted">El Charro Negro · 3 capítulos · 15 min</span></p>
         </a>
-      </div>
+      </Shelf>
 
       <h2>Cómo se produce</h2>
       <p>

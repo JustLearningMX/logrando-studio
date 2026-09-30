@@ -1,10 +1,21 @@
 ---
 import { url } from "../../lib/url.ts";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import Shelf from "../../components/Shelf.astro";
 
-// Los shorts publicados, del más reciente al más viejo. Enlaces tomados de
-// cada publish_status.json del archivo (C:\OpenMontage-Content\devtip\<id>\).
-const videos = [
+// Lo publicado, del más reciente al más viejo: shorts y videos largos. Enlaces
+// tomados de cada publish_status.json del archivo (C:\OpenMontage-Content\devtip\<id>\).
+// Un video largo no lleva `tiktok` (sólo sale completo en YouTube) y sí `meta`.
+const videos: { title: string; tag: string; youtube: string; tiktok?: string; meta?: string }[] = [
+  { title: "Patrones de diseño desde cero: primero aprende este idioma (POO y UML)",
+    tag: "Video largo · Patrones de diseño 01", youtube: "https://youtu.be/4dYG_cseLxA",
+    meta: "Clases, objetos, UML y qué es un patrón · 3 capítulos · 14 min" },
+  { title: "¿Por qué JavaScript dice que 17 + 1 es 171?", tag: "JavaScript · básico",
+    youtube: "https://youtu.be/lnAaGQbmn5k", tiktok: "https://www.tiktok.com/@deviatips/video/7690656469296909588" },
+  { title: "¿Por qué SQL cuenta 2 clientes si tienes 3?", tag: "SQL · medio",
+    youtube: "https://youtu.be/vjU9hOLw5B4", tiktok: "https://www.tiktok.com/@deviatips/video/7690656298089647381" },
+  { title: "¿Por qué Python redondea 2.5 a 2 y no a 3?", tag: "Python · básico",
+    youtube: "https://youtu.be/Z9v8k6dT9Q8", tiktok: "https://www.tiktok.com/@deviatips/video/7690656111409794324" },
   { title: "¿Por qué Python te da cero la segunda vez que sumas?", tag: "Python · medio",
     youtube: "https://youtu.be/RvcDD9VM8HI", tiktok: "https://www.tiktok.com/@deviatips/video/7690044694239169813" },
   { title: "¿Cómo entró a tu sistema sin saber la contraseña?", tag: "SQL · medio",
@@ -52,7 +63,8 @@ const videos = [
       </p>
       <ul class="pill-row" style="margin-top:20px">
         <li class="pill">Español · México</li>
-        <li class="pill">Vertical 9:16</li>
+        <li class="pill">Shorts 9:16</li>
+        <li class="pill">Videos largos 16:9</li>
       </ul>
 
       <p style="margin-top:24px">
@@ -93,6 +105,7 @@ const videos = [
         <li class="pill">JavaScript</li>
         <li class="pill">Python</li>
         <li class="pill">SQL</li>
+        <li class="pill">Patrones de diseño</li>
       </ul>
       <p class="muted" style="margin-top:16px">
         Comparaciones que mienten, ordenamientos que no ordenan, consultas que se
@@ -104,19 +117,20 @@ const videos = [
       </p>
 
       <h2>Ya salió</h2>
-      <div class="grid" style="margin-top:20px">
+      <Shelf label="Videos publicados de deviatips">
         {videos.map((v) => (
           <div class="card">
             <span class="tag">{v.tag}</span>
             <h3>{v.title}</h3>
+            {v.meta && <p class="muted">{v.meta}</p>}
             <p style="margin-bottom:0">
               <a href={v.youtube} rel="noopener">YouTube</a>
-              <span class="muted"> · </span>
-              <a href={v.tiktok} rel="noopener">TikTok</a>
+              {v.tiktok && <span class="muted"> · </span>}
+              {v.tiktok && <a href={v.tiktok} rel="noopener">TikTok</a>}
             </p>
           </div>
         ))}
-      </div>
+      </Shelf>
 
       <h2>Cómo se produce</h2>
       <p>
