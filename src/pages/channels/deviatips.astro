@@ -6,13 +6,19 @@ import Shelf from "../../components/Shelf.astro";
 // Lo publicado, del más reciente al más viejo: shorts y videos largos. Enlaces
 // tomados de cada publish_status.json del archivo (C:\OpenMontage-Content\devtip\<id>\).
 // Un video largo no lleva `tiktok` (sólo sale completo en YouTube) y sí `meta`.
-const videos: { title: string; tag: string; youtube: string; tiktok?: string; meta?: string }[] = [
+const videos: { title: string; tag: string; youtube: string; tiktok?: string; facebook?: string; meta?: string }[] = [
+  { title: "¿Por qué cambiar un número en la dirección te deja ver la factura de otro?", tag: "SQL · básico",
+    youtube: "https://youtu.be/Rs9WX263_gQ", tiktok: "https://www.tiktok.com/@deviatips/video/7692577837450087700", facebook: "https://www.facebook.com/reel/1109328148231558/" },
+  { title: "¿Por qué abrir un archivo de otra persona puede ejecutar su código en tu computadora?", tag: "Python · medio",
+    youtube: "https://youtu.be/KhNqOEKPrfI", tiktok: "https://www.tiktok.com/@deviatips/video/7692578070313585940", facebook: "https://www.facebook.com/reel/1612580453699571/" },
+  { title: "¿Por qué un simple JSON puede volver administrador a cualquiera?", tag: "JavaScript · medio-avanzado",
+    youtube: "https://youtu.be/MVISANCvD7I", tiktok: "https://www.tiktok.com/@deviatips/video/7692578218246819092", facebook: "https://www.facebook.com/reel/2892907744413883/" },
   { title: "¿Por qué JavaScript dice que el 2 no está, si sí está?", tag: "JavaScript · medio",
     youtube: "https://youtu.be/jQT-aEyOG_4", tiktok: "https://www.tiktok.com/@deviatips/video/7691710803052940565" },
   { title: "¿Por qué Python convirtió robot en robo?", tag: "Python · básico",
-    youtube: "https://youtu.be/xPAh8Hjg-D4", tiktok: "https://www.tiktok.com/@deviatips/video/7691712900485926164" },
+    youtube: "https://youtu.be/xPAh8Hjg-D4", tiktok: "https://www.tiktok.com/@deviatips/video/7691712900485926164", facebook: "https://www.facebook.com/reel/2164709524450505" },
   { title: "¿Por qué tu reporte SQL pierde las ventas del último día?", tag: "SQL · medio",
-    youtube: "https://youtu.be/8DBsnB2oS78", tiktok: "https://www.tiktok.com/@deviatips/video/7691710597884398854" },
+    youtube: "https://youtu.be/8DBsnB2oS78", tiktok: "https://www.tiktok.com/@deviatips/video/7691710597884398854", facebook: "https://www.facebook.com/reel/1903179621058112" },
   { title: "¿Por qué JavaScript te deja cambiar algo que declaraste con const?", tag: "JavaScript · básico",
     youtube: "https://youtu.be/1NU0pLeX9Js", tiktok: "https://www.tiktok.com/@deviatips/video/7691201858232159509" },
   { title: "¿Por qué Python te devuelve None al ordenar tu lista?", tag: "Python · básico",
@@ -43,19 +49,19 @@ const videos: { title: string; tag: string; youtube: string; tiktok?: string; me
   { title: "¿Por qué este ciclo de JavaScript cuenta 3, 3, 3 en vez de 0, 1, 2?", tag: "JavaScript · medio-avanzado",
     youtube: "https://youtu.be/_jDZIO73XWM", tiktok: "https://www.tiktok.com/@deviatips/video/7689127871826234645" },
   { title: "¿Por qué Python cambia tres casillas si solo tocaste una?", tag: "Python · básico",
-    youtube: "https://youtu.be/7alw1ky86x8", tiktok: "https://www.tiktok.com/@deviatips/video/7689127589218241813" },
+    youtube: "https://youtu.be/7alw1ky86x8", tiktok: "https://www.tiktok.com/@deviatips/video/7689127589218241813", facebook: "https://www.facebook.com/reel/1517819713703987" },
   { title: "¿Por qué esta consulta SQL se queda vacía por un solo dato faltante?", tag: "SQL · medio-avanzado",
-    youtube: "https://youtu.be/NHMIp0UCpjs", tiktok: "https://www.tiktok.com/@deviatips/video/7688415720417332501" },
+    youtube: "https://youtu.be/NHMIp0UCpjs", tiktok: "https://www.tiktok.com/@deviatips/video/7688415720417332501", facebook: "https://www.facebook.com/reel/924052607165019" },
   { title: "¿Por qué JavaScript pone el 10 antes del 2 al ordenar tus números?", tag: "JavaScript · básico",
-    youtube: "https://youtu.be/XFdE10oPn2E", tiktok: "https://www.tiktok.com/@deviatips/video/7688116785366781205" },
+    youtube: "https://youtu.be/XFdE10oPn2E", tiktok: "https://www.tiktok.com/@deviatips/video/7688116785366781205", facebook: "https://www.facebook.com/reel/1422162793439012" },
   { title: "¿Por qué esta función de Python recuerda lo que le pasaste antes?", tag: "Python · medio",
-    youtube: "https://youtu.be/uR2ZlB85abs", tiktok: "https://www.tiktok.com/@deviatips/video/7688405228957338900" },
+    youtube: "https://youtu.be/uR2ZlB85abs", tiktok: "https://www.tiktok.com/@deviatips/video/7688405228957338900", facebook: "https://www.facebook.com/reel/1139905102109638" },
   { title: "¿Por qué tu consulta SQL regresa vacía si los datos sí existen?", tag: "SQL · medio",
-    youtube: "https://youtu.be/kfjCKktF4ho", tiktok: "https://www.tiktok.com/@deviatips/video/7688404146805837077" },
+    youtube: "https://youtu.be/kfjCKktF4ho", tiktok: "https://www.tiktok.com/@deviatips/video/7688404146805837077", facebook: "https://www.facebook.com/reel/1119608884099394" },
   { title: "¿Por qué JavaScript no encuentra un dato que sí está en tu lista?", tag: "JavaScript · medio",
-    youtube: "https://youtu.be/nS0r-3ma7Qk", tiktok: "https://www.tiktok.com/@deviatips/video/7688403249963175189" },
+    youtube: "https://youtu.be/nS0r-3ma7Qk", tiktok: "https://www.tiktok.com/@deviatips/video/7688403249963175189", facebook: "https://www.facebook.com/reel/1076658205148943" },
   { title: "¿Por qué JavaScript dice que 0.1 + 0.2 no es 0.3?", tag: "JavaScript · básico",
-    youtube: "https://youtu.be/CpXlO3Befmo", tiktok: "https://www.tiktok.com/@deviatips/video/7688403641983667476" },
+    youtube: "https://youtu.be/CpXlO3Befmo", tiktok: "https://www.tiktok.com/@deviatips/video/7688403641983667476", facebook: "https://www.facebook.com/reel/4814241888902955" },
 ];
 ---
 
@@ -87,6 +93,7 @@ const videos: { title: string; tag: string; youtube: string; tiktok?: string; me
       <p style="margin-top:24px">
         <a class="btn" href="https://www.youtube.com/@deviatips" rel="noopener">Ver en YouTube</a>
         <a class="btn secondary" href="https://www.tiktok.com/@deviatips" rel="noopener">Ver en TikTok</a>
+        <a class="btn secondary" href="https://www.facebook.com/profile.php?id=61595199025349" rel="noopener">Ver en Facebook</a>
       </p>
     </section>
 
@@ -123,6 +130,7 @@ const videos: { title: string; tag: string; youtube: string; tiktok?: string; me
         <li class="pill">Python</li>
         <li class="pill">SQL</li>
         <li class="pill">Patrones de diseño</li>
+        <li class="pill">Seguridad</li>
       </ul>
       <p class="muted" style="margin-top:16px">
         Comparaciones que mienten, ordenamientos que no ordenan, consultas que se
@@ -132,7 +140,9 @@ const videos: { title: string; tag: string; youtube: string; tiktok?: string; me
         NaN, divisiones que pierden los decimales, filtros que se saltan
         elementos, sumas que pegan texto, redondeos que van al par, conteos que
         se saltan los vacíos, constantes que sí cambian, ordenamientos que
-        devuelven nada y consultas que mezclan AND con OR. En formato largo:
+        devuelven nada, consultas que mezclan AND con OR, un JSON que contamina todos
+        los objetos, archivos que ejecutan código al abrirse y facturas ajenas a
+        un número de distancia. En formato largo:
         clases, objetos, UML y qué es un patrón de diseño.
       </p>
 
@@ -147,6 +157,8 @@ const videos: { title: string; tag: string; youtube: string; tiktok?: string; me
               <a href={v.youtube} rel="noopener">YouTube</a>
               {v.tiktok && <span class="muted"> · </span>}
               {v.tiktok && <a href={v.tiktok} rel="noopener">TikTok</a>}
+              {v.facebook && <span class="muted"> · </span>}
+              {v.facebook && <a href={v.facebook} rel="noopener">Facebook</a>}
             </p>
           </div>
         ))}
