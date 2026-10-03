@@ -10,8 +10,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     <section class="hero" style="padding-bottom:16px">
       <h1>Política de privacidad</h1>
       <p class="lede">
-        Vigente desde el 21 de septiembre de 2026. Última actualización: 21 de
-        septiembre de 2026.
+        Vigente desde el 21 de septiembre de 2026. Última actualización: 3 de
+        octubre de 2026.
       </p>
     </section>
 
@@ -23,7 +23,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           este estudio publica sus propios videos en sus propias cuentas. No
           recolectamos datos de visitantes, no vendemos información y no
           compartimos con terceros los datos que las plataformas nos dan. Los
-          permisos que pedimos a YouTube y TikTok sirven para una sola cosa:
+          permisos que pedimos a YouTube, TikTok y Facebook sirven para una sola cosa:
           subir nuestros videos.
         </p>
       </div>
@@ -124,6 +124,37 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         videos, seguidores, mensajes o estadísticas de la cuenta.
       </p>
 
+      <h3>Facebook (Graph API de Meta)</h3>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Permiso</th>
+              <th scope="col">Para qué lo usamos</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>pages_manage_posts</code></td>
+              <td>Publicar o programar en la Página del estudio un video o un Reel ya producido y aprobado, con su texto y su miniatura.</td>
+            </tr>
+            <tr>
+              <td><code>pages_read_engagement</code></td>
+              <td>Leer los videos de la Página del estudio para registrar la dirección y el estado de cada publicación, y no repetir una que ya existe.</td>
+            </tr>
+            <tr>
+              <td><code>pages_show_list</code></td>
+              <td>Listar las Páginas que administra quien autoriza, únicamente para confirmar que la publicación va a la Página correcta y detenerse si no coincide.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted" style="margin-top:12px">
+        Solo operamos Páginas propias del estudio. No pedimos permisos para leer
+        mensajes, comentarios, seguidores o datos de la audiencia, ni para
+        publicar en perfiles personales o en nombre de terceros.
+      </p>
+
       <h2>5. Uso limitado de los datos de Google</h2>
       <p>
         El uso y la transferencia que Logrando Studio hace de la información
@@ -142,7 +173,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
       <h2>6. Dónde se guardan las credenciales</h2>
       <p>
-        Los tokens de acceso y actualización que emiten Google y TikTok se
+        Los tokens de acceso que emiten Google, TikTok y Meta se
         guardan <strong>únicamente en la computadora personal del operador</strong>,
         en una carpeta fuera de cualquier repositorio de código, y nunca se
         suben a este sitio, a GitHub ni a ningún servidor nuestro. Este sitio web
@@ -153,7 +184,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         (<code>/tiktok/callback/</code>) solo muestra en pantalla el código que la
         plataforma envía en la dirección, para que el operador lo copie a su
         propia terminal. Ese código no se envía a ningún servidor, no se guarda y
-        no sale del navegador.
+        y no sale del navegador. La página de retorno de Facebook
+        (<code>/facebook/callback/</code>) hace lo mismo.
       </p>
 
       <h2>7. Cuánto tiempo conservamos los datos</h2>
@@ -177,6 +209,12 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           → seleccionar la aplicación → quitar el acceso.
         </li>
         <li>
+          <strong>Facebook:</strong> en la cuenta de Facebook, Configuración →
+          Seguridad e inicio de sesión → Apps y sitios web (o
+          <a href="https://www.facebook.com/settings?tab=applications" rel="noopener">facebook.com/settings?tab=applications</a>)
+          → seleccionar Logrando Studio → quitar.
+        </li>
+        <li>
           <strong>TikTok:</strong> en la app, Perfil → Menú → Configuración y
           privacidad → Seguridad y permisos → Administrar permisos de
           aplicaciones → quitar el acceso.
@@ -188,6 +226,18 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         <a href="mailto:virtual.liga@gmail.com">virtual.liga@gmail.com</a>;
         respondemos en un plazo máximo de 30 días.
       </p>
+
+      <h3 id="eliminacion-de-datos">Eliminación de datos (Facebook)</h3>
+      <p>
+        Logrando Studio no guarda datos de usuarios de Facebook en ningún
+        servidor: lo único que conserva, en la computadora del operador, es el
+        token de acceso a la Página del estudio y el registro de qué videos se
+        publicaron. Para eliminar todo lo relacionado con tu cuenta:
+      </p>
+      <ol>
+        <li>Quita la aplicación Logrando Studio en la configuración de Facebook, como se indica arriba. Los tokens guardados dejan de funcionar de inmediato.</li>
+        <li>Si además quieres que borremos cualquier registro local, escribe a <a href="mailto:virtual.liga@gmail.com">virtual.liga@gmail.com</a> con el asunto «Eliminar mis datos». Lo hacemos y te confirmamos por correo en un plazo máximo de 30 días.</li>
+      </ol>
 
       <h2>9. Menores de edad</h2>
       <p>

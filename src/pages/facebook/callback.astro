@@ -1,0 +1,123 @@
+---
+/**
+ * Return point of the Facebook authorization.
+ *
+ * The flow starts in the terminal: `facebook_auth.py` builds the authorize URL
+ * and generates the `state`. After the consent screen Facebook sends the
+ * browser here with `?code=...&state=...`. This page only shows the full URL so
+ * the operator can paste it back into the terminal, where the script verifies
+ * `state` and does the exchange (the app secret exists only on that machine).
+ * It is static: the code is not sent to any server, not stored, and never
+ * leaves the browser.
+ */
+import { url } from "../../lib/url.ts";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Autorización de Facebook — Logrando Studio"
+  description="Página de retorno de la autorización de Facebook para Logrando Studio."
+  noindex={true}
+>
+  <div class="wrap">
+    <section class="hero" style="padding-bottom:8px">
+      <h1>Autorización de Facebook</h1>
+      <p class="lede" id="subtitle">Leyendo la respuesta de Facebook…</p>
+    </section>
+
+    <div class="prose">
+      <div id="ok" hidden>
+        <div class="notice">
+          <p>
+            <strong>Listo.</strong> Copia la dirección completa y pégala en la
+            terminal, donde <code>facebook_auth.py</code> la está esperando.
+          </p>
+        </div>
+        <p><strong>Dirección para pegar</strong></p>
+        <pre class="codeblock" id="fullUrl"></pre>
+        <p>
+          <button class="btn" type="button" id="copyBtn">Copiar dirección</button>
+          <span class="muted" role="status" aria-live="polite" id="copyMsg"></span>
+        </p>
+        <div class="notice warn">
+          <p>
+            <strong>No compartas esta dirección.</strong> Contiene un código de un
+            solo uso que caduca en minutos.
+          </p>
+        </div>
+      </div>
+
+      <div id="err" hidden>
+        <div class="notice warn">
+          <p><strong>Facebook no concedió la autorización.</strong></p>
+          <p id="errDetail" class="muted"></p>
+        </div>
+        <p>
+          Revisa en el portal de desarrolladores que tu cuenta tenga rol en la
+          app y que los permisos <code>pages_show_list</code>,
+          <code>pages_read_engagement</code> y <code>pages_manage_posts</code>
+          estén agregados. Luego vuelve a correr <code>facebook_auth.py</code>.
+        </p>
+      </div>
+
+      <div id="idle" hidden>
+        <div class="notice">
+          <p>
+            Esta página es el punto de retorno de la autorización de Facebook. No
+            tiene nada que hacer si llegaste aquí directamente.
+          </p>
+        </div>
+      </div>
+
+      <h2>Qué hace esta página</h2>
+      <p>
+        Nada más que leer lo que viene en la dirección y mostrarlo. Es un sitio
+        estático: <strong>el código no se envía a ningún servidor, no se guarda y
+        no sale de tu navegador.</strong> Los detalles están en la
+        <a href={url("/privacy/")}>política de privacidad</a>.
+      </p>
+    </div>
+  </div>
+</BaseLayout>
+
+{/* is:inline: the OAuth return point must run from a plain file load, with nothing to fetch first. */}
+<script is:inline>
+  (function () {
+    var params = new URLSearchParams(window.location.search);
+    var code = params.get("code");
+    var error = params.get("error");
+    var subtitle = document.getElementById("subtitle");
+    function show(id) {
+      document.getElementById(id).hidden = false;
+    }
+    if (error) {
+      subtitle.textContent = "Facebook respondió con un error.";
+      document.getElementById("errDetail").textContent = params.get("error_description") || error;
+      show("err");
+    } else if (code) {
+      subtitle.textContent = "Autorización recibida.";
+      document.getElementById("fullUrl").textContent = window.location.href;
+      show("ok");
+      document.getElementById("copyBtn").addEventListener("click", function () {
+        var msg = document.getElementById("copyMsg");
+        function done(ok) {
+          msg.textContent = ok ? "  Copiado." : "  Selecciónala y cópiala a mano.";
+          setTimeout(function () {
+            msg.textContent = "";
+          }, 2500);
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(window.location.href).then(
+            function () { done(true); },
+            function () { done(false); }
+          );
+        } else {
+          done(false);
+        }
+      });
+    } else {
+      subtitle.textContent = "Nada que mostrar.";
+      show("idle");
+    }
+  })();
+</script>
