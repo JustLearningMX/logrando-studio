@@ -6,7 +6,7 @@ import Shelf from "../../components/Shelf.astro";
 // Lo publicado, del más reciente al más viejo: shorts y videos largos. Enlaces
 // tomados de cada publish_status.json del archivo (C:\OpenMontage-Content\devtip\<id>\).
 // Un video largo no lleva `tiktok` (sólo sale completo en YouTube) y sí `meta`.
-const videos: { title: string; tag: string; youtube: string; tiktok?: string; facebook?: string; meta?: string }[] = [
+const videos: { title: string; tag: string; youtube: string; tiktok?: string; facebook?: string; meta?: string; tiktokParts?: string[] }[] = [
   { title: "¿Por qué JavaScript dice que null es un objeto?", tag: "JavaScript · básico",
     youtube: "https://youtu.be/OOm9ORxyfGw", tiktok: "https://www.tiktok.com/@deviatips/video/7693702098101292308", facebook: "https://www.facebook.com/reel/1114497377720264/" },
   { title: "¿Por qué SQL no te deja filtrar con WHERE los clientes con más de un pedido?", tag: "SQL · básico",
@@ -20,40 +20,41 @@ const videos: { title: string; tag: string; youtube: string; tiktok?: string; fa
   { title: "¿Por qué un simple JSON puede volver administrador a cualquiera?", tag: "JavaScript · medio-avanzado",
     youtube: "https://youtu.be/MVISANCvD7I", tiktok: "https://www.tiktok.com/@deviatips/video/7692578218246819092", facebook: "https://www.facebook.com/reel/2892907744413883/" },
   { title: "¿Por qué JavaScript dice que el 2 no está, si sí está?", tag: "JavaScript · medio",
-    youtube: "https://youtu.be/jQT-aEyOG_4", tiktok: "https://www.tiktok.com/@deviatips/video/7691710803052940565" },
+    youtube: "https://youtu.be/jQT-aEyOG_4", tiktok: "https://www.tiktok.com/@deviatips/video/7691710803052940565", facebook: "https://www.facebook.com/reel/1736644808344704" },
   { title: "¿Por qué Python convirtió robot en robo?", tag: "Python · básico",
     youtube: "https://youtu.be/xPAh8Hjg-D4", tiktok: "https://www.tiktok.com/@deviatips/video/7691712900485926164", facebook: "https://www.facebook.com/reel/2164709524450505" },
   { title: "¿Por qué tu reporte SQL pierde las ventas del último día?", tag: "SQL · medio",
     youtube: "https://youtu.be/8DBsnB2oS78", tiktok: "https://www.tiktok.com/@deviatips/video/7691710597884398854", facebook: "https://www.facebook.com/reel/1903179621058112" },
   { title: "¿Por qué JavaScript te deja cambiar algo que declaraste con const?", tag: "JavaScript · básico",
-    youtube: "https://youtu.be/1NU0pLeX9Js", tiktok: "https://www.tiktok.com/@deviatips/video/7691201858232159509" },
+    youtube: "https://youtu.be/1NU0pLeX9Js", tiktok: "https://www.tiktok.com/@deviatips/video/7691201858232159509", facebook: "https://www.facebook.com/reel/1458509746154014" },
   { title: "¿Por qué Python te devuelve None al ordenar tu lista?", tag: "Python · básico",
-    youtube: "https://youtu.be/tE3mfkrem4Y", tiktok: "https://www.tiktok.com/@deviatips/video/7691201666284113158" },
+    youtube: "https://youtu.be/tE3mfkrem4Y", tiktok: "https://www.tiktok.com/@deviatips/video/7691201666284113158", facebook: "https://www.facebook.com/reel/1104372605337963" },
   { title: "¿Por qué tu consulta SQL trae productos que no pediste?", tag: "SQL · medio",
-    youtube: "https://youtu.be/i9y2Km3Nyx0", tiktok: "https://www.tiktok.com/@deviatips/video/7691201504551652628" },
+    youtube: "https://youtu.be/i9y2Km3Nyx0", tiktok: "https://www.tiktok.com/@deviatips/video/7691201504551652628", facebook: "https://www.facebook.com/reel/1114140747990854" },
   { title: "Patrones de diseño desde cero: primero aprende este idioma (POO y UML)",
-    tag: "Video largo · Patrones de diseño 01", youtube: "https://youtu.be/4dYG_cseLxA",
+    tag: "Video largo · Patrones de diseño 01", youtube: "https://youtu.be/4dYG_cseLxA", facebook: "https://www.facebook.com/reel/1700717568138631",
+    tiktokParts: ["https://www.tiktok.com/@deviatips/video/7691154830563282197", "https://www.tiktok.com/@deviatips/video/7691206684072758549", "https://www.tiktok.com/@deviatips/video/7691207012436200724"],
     meta: "Clases, objetos, UML y qué es un patrón · 3 capítulos · 14 min" },
   { title: "¿Por qué JavaScript dice que 17 + 1 es 171?", tag: "JavaScript · básico",
-    youtube: "https://youtu.be/lnAaGQbmn5k", tiktok: "https://www.tiktok.com/@deviatips/video/7690656469296909588" },
+    youtube: "https://youtu.be/lnAaGQbmn5k", tiktok: "https://www.tiktok.com/@deviatips/video/7690656469296909588", facebook: "https://www.facebook.com/reel/1461389529418894" },
   { title: "¿Por qué SQL cuenta 2 clientes si tienes 3?", tag: "SQL · medio",
-    youtube: "https://youtu.be/vjU9hOLw5B4", tiktok: "https://www.tiktok.com/@deviatips/video/7690656298089647381" },
+    youtube: "https://youtu.be/vjU9hOLw5B4", tiktok: "https://www.tiktok.com/@deviatips/video/7690656298089647381", facebook: "https://www.facebook.com/reel/2286964355403679" },
   { title: "¿Por qué Python redondea 2.5 a 2 y no a 3?", tag: "Python · básico",
-    youtube: "https://youtu.be/Z9v8k6dT9Q8", tiktok: "https://www.tiktok.com/@deviatips/video/7690656111409794324" },
+    youtube: "https://youtu.be/Z9v8k6dT9Q8", tiktok: "https://www.tiktok.com/@deviatips/video/7690656111409794324", facebook: "https://www.facebook.com/reel/1692079466261402" },
   { title: "¿Por qué Python te da cero la segunda vez que sumas?", tag: "Python · medio",
-    youtube: "https://youtu.be/RvcDD9VM8HI", tiktok: "https://www.tiktok.com/@deviatips/video/7690044694239169813" },
+    youtube: "https://youtu.be/RvcDD9VM8HI", tiktok: "https://www.tiktok.com/@deviatips/video/7690044694239169813", facebook: "https://www.facebook.com/reel/924885153748359" },
   { title: "¿Cómo entró a tu sistema sin saber la contraseña?", tag: "SQL · medio",
-    youtube: "https://youtu.be/42WrRt1ZXIc", tiktok: "https://www.tiktok.com/@deviatips/video/7690044904977730836" },
+    youtube: "https://youtu.be/42WrRt1ZXIc", tiktok: "https://www.tiktok.com/@deviatips/video/7690044904977730836", facebook: "https://www.facebook.com/reel/4597085110524985" },
   { title: "¿Por qué JavaScript te agenda la cita un mes después?", tag: "JavaScript · básico",
-    youtube: "https://youtu.be/0nYgxyFefCY", tiktok: "https://www.tiktok.com/@deviatips/video/7690045090747698453" },
+    youtube: "https://youtu.be/0nYgxyFefCY", tiktok: "https://www.tiktok.com/@deviatips/video/7690045090747698453", facebook: "https://www.facebook.com/reel/1858710688822687" },
   { title: "¿Por qué JavaScript convierte tu 7 en NaN con esta línea tan común?", tag: "JavaScript · medio",
-    youtube: "https://youtu.be/BWKLML_Mg88", tiktok: "https://www.tiktok.com/@deviatips/video/7689656175775763732" },
+    youtube: "https://youtu.be/BWKLML_Mg88", tiktok: "https://www.tiktok.com/@deviatips/video/7689656175775763732", facebook: "https://www.facebook.com/reel/1821852892180980" },
   { title: "¿Por qué SQL dice que 7 entre 10 es cero?", tag: "SQL · básico",
-    youtube: "https://youtu.be/7dCEysLqJkc", tiktok: "https://www.tiktok.com/@deviatips/video/7689655909110254869" },
+    youtube: "https://youtu.be/7dCEysLqJkc", tiktok: "https://www.tiktok.com/@deviatips/video/7689655909110254869", facebook: "https://www.facebook.com/reel/2334470037312536" },
   { title: "¿Por qué Python se salta un número cuando limpias tu lista?", tag: "Python · básico",
-    youtube: "https://youtu.be/KU2Gy-ZRCcU", tiktok: "https://www.tiktok.com/@deviatips/video/7689655658832006452" },
+    youtube: "https://youtu.be/KU2Gy-ZRCcU", tiktok: "https://www.tiktok.com/@deviatips/video/7689655658832006452", facebook: "https://www.facebook.com/reel/2097751364201909" },
   { title: "¿Por qué este ciclo de JavaScript cuenta 3, 3, 3 en vez de 0, 1, 2?", tag: "JavaScript · medio-avanzado",
-    youtube: "https://youtu.be/_jDZIO73XWM", tiktok: "https://www.tiktok.com/@deviatips/video/7689127871826234645" },
+    youtube: "https://youtu.be/_jDZIO73XWM", tiktok: "https://www.tiktok.com/@deviatips/video/7689127871826234645", facebook: "https://www.facebook.com/reel/1806547207276358" },
   { title: "¿Por qué Python cambia tres casillas si solo tocaste una?", tag: "Python · básico",
     youtube: "https://youtu.be/7alw1ky86x8", tiktok: "https://www.tiktok.com/@deviatips/video/7689127589218241813", facebook: "https://www.facebook.com/reel/1517819713703987" },
   { title: "¿Por qué esta consulta SQL se queda vacía por un solo dato faltante?", tag: "SQL · medio-avanzado",
@@ -163,6 +164,8 @@ const videos: { title: string; tag: string; youtube: string; tiktok?: string; fa
               <a href={v.youtube} rel="noopener">YouTube</a>
               {v.tiktok && <span class="muted"> · </span>}
               {v.tiktok && <a href={v.tiktok} rel="noopener">TikTok</a>}
+              {v.tiktokParts && <span class="muted"> · TikTok: </span>}
+              {v.tiktokParts && v.tiktokParts.map((u, i) => (<span>{i > 0 && <span class="muted"> · </span>}<a href={u} rel="noopener">Parte {i + 1}</a></span>))}
               {v.facebook && <span class="muted"> · </span>}
               {v.facebook && <a href={v.facebook} rel="noopener">Facebook</a>}
             </p>
