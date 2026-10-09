@@ -77,7 +77,10 @@ export const TIKTOK = {
   scopes: ["user.info.basic", "video.upload"] as const,
 
   /** Channels of the studio. Each authorizes the same app separately. */
-  channels: [{ slug: "deviatips", label: "deviatips" }] as const,
+  channels: [
+    { slug: "deviatips", label: "deviatips" },
+    { slug: "lo-que-cuentan-por-ahi", label: "Lo que cuentan por ahí" },
+  ] as const,
 } as const;
 
 /** sessionStorage key holding the CSRF state while the user is away at TikTok. */
