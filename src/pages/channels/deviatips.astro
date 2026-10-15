@@ -7,6 +7,10 @@ import Shelf from "../../components/Shelf.astro";
 // tomados de cada publish_status.json del archivo (C:\OpenMontage-Content\devtip\<id>\).
 // Un video largo no lleva `tiktok` (sólo sale completo en YouTube) y sí `meta`.
 const videos: { title: string; tag: string; youtube: string; tiktok?: string; facebook?: string; meta?: string; tiktokParts?: string[] }[] = [
+  { title: "Principios de diseño y SOLID explicados con un ejemplo",
+    tag: "Video largo · Patrones de diseño 02", youtube: "https://youtu.be/vDydkuMW-ug", facebook: "https://www.facebook.com/reel/1485613420089210/",
+    tiktokParts: ["https://www.tiktok.com/@deviatips/video/7696933819185728788", "https://www.tiktok.com/@deviatips/video/7696933975784295701", "https://www.tiktok.com/@deviatips/video/7696934126586252565"],
+    meta: "Buen diseño, tres ideas clave y los cinco principios SOLID · 3 capítulos · 13 min" },
   { title: "¿Qué pasa si olvidas el WHERE en un UPDATE de SQL?", tag: "SQL · básico",
     youtube: "https://youtu.be/RHL6b9tUArs", tiktok: "https://www.tiktok.com/@deviatips/video/7696887622148394260", facebook: "https://www.facebook.com/reel/1674437847400469" },
   { title: "¿Por qué Python dice que la palabra «False» es verdadera?", tag: "Python · básico",
