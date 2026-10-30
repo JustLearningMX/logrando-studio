@@ -7,12 +7,18 @@ import Shelf from "../../components/Shelf.astro";
 // tomados de cada publish_status.json del archivo (C:\OpenMontage-Content\devtip\<id>\).
 // Un video largo no lleva `tiktok` (sólo sale completo en YouTube) y sí `meta`.
 const videos: { title: string; tag: string; youtube: string; tiktok?: string; facebook?: string; meta?: string; tiktokParts?: string[] }[] = [
+  { title: "¿Por qué algunos clientes salen sin nombre en tu reporte de SQL?", tag: "SQL · medio",
+    youtube: "https://youtu.be/TMHaiOasv3A", tiktok: "https://www.tiktok.com/@deviatips/video/7702564207773879558", facebook: "https://www.facebook.com/reel/1119973434298541" },
+  { title: "¿Por qué Python no pone tu texto en mayúsculas aunque se lo pides?", tag: "Python · básico",
+    youtube: "https://youtu.be/oFe9HtsSp48", facebook: "https://www.facebook.com/reel/1135672335712950" },
+  { title: "¿Por qué JavaScript guarda «[object Object]» en lugar de tus datos?", tag: "JavaScript · básico",
+    youtube: "https://youtu.be/YGjSFP0Mr8E", tiktok: "https://www.tiktok.com/@deviatips/video/7702571285057916180", facebook: "https://www.facebook.com/reel/1669784861400285" },
   { title: "¿Cómo puede desaparecer dinero en una transferencia con SQL?", tag: "SQL · medio-avanzado",
-    youtube: "https://youtu.be/8IV-ZieY298", facebook: "https://www.facebook.com/reel/1613494050257212" },
+    youtube: "https://youtu.be/8IV-ZieY298", tiktok: "https://www.tiktok.com/@deviatips/video/7702562333511437588", facebook: "https://www.facebook.com/reel/1613494050257212" },
   { title: "¿Por qué cambias la copia en Python y se modifica el original?", tag: "Python · básico",
-    youtube: "https://youtu.be/KVajw9aD3Bk", facebook: "https://www.facebook.com/reel/4568825926779774" },
+    youtube: "https://youtu.be/KVajw9aD3Bk", tiktok: "https://www.tiktok.com/@deviatips/video/7702464288954338581", facebook: "https://www.facebook.com/reel/4568825926779774" },
   { title: "¿Por qué tu función de JavaScript se olvida de quién es?", tag: "JavaScript · medio",
-    youtube: "https://youtu.be/HKwVMFS61jE", facebook: "https://www.facebook.com/reel/1102712765939988" },
+    youtube: "https://youtu.be/HKwVMFS61jE", tiktok: "https://www.tiktok.com/@deviatips/video/7702522990935788821", facebook: "https://www.facebook.com/reel/1102712765939988" },
   { title: "¿Por qué tu reporte de SQL dice que vendiste más de lo real?", tag: "SQL · medio",
     youtube: "https://youtu.be/4ck7eaE-mWc", tiktok: "https://www.tiktok.com/@deviatips/video/7701884651551444244", facebook: "https://www.facebook.com/reel/1916021406028072" },
   { title: "¿Por qué tu código de Python no falla, pero tampoco funciona?", tag: "Python · medio",
