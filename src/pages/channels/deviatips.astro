@@ -7,6 +7,10 @@ import Shelf from "../../components/Shelf.astro";
 // tomados de cada publish_status.json del archivo (C:\OpenMontage-Content\devtip\<id>\).
 // Un video largo no lleva `tiktok` (sólo sale completo en YouTube) y sí `meta`.
 const videos: { title: string; tag: string; youtube: string; tiktok?: string; facebook?: string; meta?: string; tiktokParts?: string[] }[] = [
+  { title: "Patrones creacionales: Factory Method y Abstract Factory con un ejemplo",
+    tag: "Video largo · Patrones de diseño 03", youtube: "https://youtu.be/7b_a15b6a_Y", facebook: "https://www.facebook.com/reel/1231347782791519/",
+    tiktokParts: ["https://www.tiktok.com/@deviatips/video/7706260641841007893", "https://www.tiktok.com/@deviatips/video/7706260817603218708", "https://www.tiktok.com/@deviatips/video/7706261008330788116"],
+    meta: "El problema de new, Factory Method y Abstract Factory · 3 capítulos · 13 min" },
   { title: "¿Por qué JavaScript no marca error cuando la página no existe?", tag: "JavaScript · medio",
     youtube: "https://youtu.be/nVntQXoymzM", tiktok: "https://www.tiktok.com/@deviatips/video/7705431491203239189", facebook: "https://www.facebook.com/reel/29296424839995050" },
   { title: "¿Por qué Python dice que tu variable no existe si la acabas de crear?", tag: "Python · básico",
