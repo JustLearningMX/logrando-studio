@@ -7,6 +7,15 @@ import Shelf from "../../components/Shelf.astro";
 // tomados de cada publish_status.json del archivo (C:\OpenMontage-Content\devtip\<id>\).
 // Un video largo no lleva `tiktok` (sólo sale completo en YouTube) y sí `meta`.
 const videos: { title: string; tag: string; youtube: string; tiktok?: string; facebook?: string; meta?: string; tiktokParts?: string[] }[] = [
+  { title: "Builder, Prototype y Singleton con un ejemplo: patrones creacionales",
+    tag: "Video largo · Patrones de diseño 04", youtube: "https://youtu.be/m1HJVkwqKKM", facebook: "https://www.facebook.com/reel/1448616013916041/",
+    meta: "Builder, Prototype y Singleton: los tres creacionales que faltaban · 3 capítulos · 13 min" },
+  { title: "¿Por qué mi SQL ordena el 10 antes que el 9?", tag: "SQL · básico",
+    youtube: "https://youtu.be/KcNbDUH1swI", facebook: "https://www.facebook.com/reel/1427023195811632/" },
+  { title: "¿Por qué Python no me deja comparar dos fechas?", tag: "Python · medio",
+    youtube: "https://youtu.be/aDBLGHIv9PE", tiktok: "https://www.tiktok.com/@deviatips/video/7707371716523117845", facebook: "https://www.facebook.com/reel/2796169394111621/" },
+  { title: "¿Por qué vacío mi lista en JavaScript y otra parte del código la sigue viendo llena?", tag: "JavaScript · medio",
+    youtube: "https://youtu.be/DLowJa456PA", tiktok: "https://www.tiktok.com/@deviatips/video/7707371654480940308", facebook: "https://www.facebook.com/reel/1493089122711974/" },
   { title: "Patrones creacionales: Factory Method y Abstract Factory con un ejemplo",
     tag: "Video largo · Patrones de diseño 03", youtube: "https://youtu.be/7b_a15b6a_Y", facebook: "https://www.facebook.com/reel/1231347782791519/",
     tiktokParts: ["https://www.tiktok.com/@deviatips/video/7706260641841007893", "https://www.tiktok.com/@deviatips/video/7706260817603218708", "https://www.tiktok.com/@deviatips/video/7706261008330788116"],
