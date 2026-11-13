@@ -7,6 +7,12 @@ import Shelf from "../../components/Shelf.astro";
 // tomados de cada publish_status.json del archivo (C:\OpenMontage-Content\devtip\<id>\).
 // Un video largo no lleva `tiktok` (sólo sale completo en YouTube) y sí `meta`.
 const videos: { title: string; tag: string; youtube: string; tiktok?: string; facebook?: string; meta?: string; tiktokParts?: string[] }[] = [
+  { title: "¿Por qué mi búsqueda en SQL trae resultados que no pedí?", tag: "SQL · medio",
+    youtube: "https://youtu.be/qzx3VgWFkxc", tiktok: "https://www.tiktok.com/@deviatips/video/7707756711343443201", facebook: "https://www.facebook.com/reel/1117321160913552/" },
+  { title: "¿Por qué Python le quita los acentos a tu JSON?", tag: "Python · básico",
+    youtube: "https://youtu.be/13FIFOOj4GI", tiktok: "https://www.tiktok.com/@deviatips/video/7707756643794029844", facebook: "https://www.facebook.com/reel/1147264337771759/" },
+  { title: "¿Por qué mi tienda en JavaScript dice que el precio más alto es -Infinity?", tag: "JavaScript · medio",
+    youtube: "https://youtu.be/syYLnetKimo", tiktok: "https://www.tiktok.com/@deviatips/video/7707756511002414357", facebook: "https://www.facebook.com/reel/2243600737038537/" },
   { title: "Builder, Prototype y Singleton con un ejemplo: patrones creacionales",
     tag: "Video largo · Patrones de diseño 04", youtube: "https://youtu.be/m1HJVkwqKKM", facebook: "https://www.facebook.com/reel/1448616013916041/",
     tiktokParts: ["https://www.tiktok.com/@deviatips/video/7707437628093779220", "https://www.tiktok.com/@deviatips/video/7707437688919444756", "https://www.tiktok.com/@deviatips/video/7707437761980108052"],
